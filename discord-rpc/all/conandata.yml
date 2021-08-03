@@ -1,0 +1,4 @@
+sources:
+  "3.4.0":
+    url: "https://github.com/discord/discord-rpc/archive/963aa9f3e5ce81a4682c6ca3d136cddda614db33.zip"
+    sha256: "a91ec58748b6c55e2e91ab6288ad24a98306da99e24637a2ea97b19c37fc7ad2"
