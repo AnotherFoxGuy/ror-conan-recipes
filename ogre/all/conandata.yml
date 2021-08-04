@@ -1,0 +1,15 @@
+sources:
+  "1.11.6.1":
+    url: "https://cdn.anotherfoxguy.com/ogre-1.11.6-with-patches.zip"
+    sha256: "e58f2fc55bad64f75a43b309ccfaccdb0b9889fbed20547e51f10d7d4824ab9f"
+patches:
+  "1.11.6.1":
+    - patch_file: "patches/1.11.6.1/CMakeLists.txt.patch"
+    - patch_file: "patches/1.11.6.1/Dependencies.cmake.patch"
+requirements:
+  - "zlib/[1.x]"
+  - "zziplib/[0.13.x]"
+  - "freetype/[2.x]"
+  - "freeimage/[3.x]@anotherfoxguy/stable"
+  - "cg-toolkit/3.1@anotherfoxguy/stable"
+  - "pugixml/[1.x]"
