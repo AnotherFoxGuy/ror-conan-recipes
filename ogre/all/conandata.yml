@@ -1,6 +1,6 @@
 sources:
   "1.11.6.1":
-    url: "https://cdn.anotherfoxguy.com/ogre-1.11.6-with-patches.zip"
+    url: "https://github.com/only-a-ptr/ogre/archive/0ee9c1761cb90e8864ae9b93d9901affa5522444.zip"
     sha256: "e58f2fc55bad64f75a43b309ccfaccdb0b9889fbed20547e51f10d7d4824ab9f"
 patches:
   "1.11.6.1":
