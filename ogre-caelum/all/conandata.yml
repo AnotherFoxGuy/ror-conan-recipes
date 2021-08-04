@@ -1,0 +1,9 @@
+sources:
+  "0.6.4":
+    url: "https://github.com/OGRECave/ogre-caelum/archive/94913d2040a41148c14001c33a0bdc0f100842f8.zip"
+    sha256: "9de4159ae8050fd0858b3c1c09005aa50b36079a3a06accfb67203669be9a09e"
+patches:
+  "0.6.4":
+    - patch_file: "patches/0.6.4/CMakeLists.txt.patch" 
+requirements:
+  - "ogre3d/[1.x]@anotherfoxguy/stable"

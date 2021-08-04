@@ -1,0 +1,19 @@
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -9,6 +9,7 @@
+ cmake_minimum_required(VERSION 3.0.2)
+ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+ 
++include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+ 
+ # add some functions we use that are shipped with cmake
+ INCLUDE(CheckLibraryExists)
+@@ -18,7 +19,7 @@
+ INCLUDE(CheckCSourceCompiles)
+ 
+ # define the project
+-project(Caelum VERSION 0.6.3)
++project(Caelum VERSION 0.6.4)
+ 
+ # some versioning things
+ SET(LIB_MAJOR_VERSION ${Caelum_VERSION_MAJOR})
