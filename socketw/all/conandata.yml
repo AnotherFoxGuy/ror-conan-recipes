@@ -1,0 +1,6 @@
+sources:
+  "3.10.27":
+    url: "https://github.com/RigsOfRods/socketw/archive/refs/tags/3.10.27.tar.gz"
+    sha256: "8f25b7ebf85ca12f2c3257e851be2a95819b9ac1ee78884fc4db81c850b5d70e"
+requirements:
+  - "openssl/1.1.1k"
