@@ -1,0 +1,19 @@
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -9,6 +9,7 @@
+ cmake_minimum_required( VERSION 3.0.2 )
+ set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake )
+ 
++include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+ 
+ # add some functions we use that are shipped with cmake
+ INCLUDE(CheckLibraryExists)
+@@ -20,7 +21,7 @@
+ # some versioning things
+ SET(LIB_MAJOR_VERSION "1")
+ SET(LIB_MINOR_VERSION "2")
+-SET(LIB_BUILD_VERSION "0")
++SET(LIB_BUILD_VERSION "1")
+ SET(LIB_VERSION "${LIB_MAJOR_VERSION}.${LIB_MINOR_VERSION}.${LIB_BUILD_VERSION}")
+ IF(NOT DEFINED LIB_INSTALL_DIR)
+   SET(LIB_INSTALL_DIR "lib${LIB_SUFFIX}")

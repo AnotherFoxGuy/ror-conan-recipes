@@ -1,0 +1,9 @@
+sources:
+  "1.2.1":
+    url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/7c9295f771e8c7973efc04d53283978ccd44fc9b.zip"
+    sha256: "513043eecf1aaf6f8b2335c953b0664128aa492007fe3d93068e5f4be436093a"
+patches:
+  "1.2.1":
+    - patch_file: "patches/1.2.1/CMakeLists.txt.patch" 
+requirements:
+  - "ogre3d/[1.x]@anotherfoxguy/stable"
