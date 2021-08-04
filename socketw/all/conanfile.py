@@ -16,7 +16,6 @@ class SocketwConan(ConanFile):
     def source(self):
         tools.get(**self.conan_data["sources"][self.version], strip_root=True)
 
-
     def build(self):
         cmake = CMake(self)
         cmake.configure()
