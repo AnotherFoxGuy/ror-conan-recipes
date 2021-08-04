@@ -1,0 +1,11 @@
+sources:
+  "3.4.0":
+    url: "https://github.com/MyGUI/mygui/archive/refs/tags/MyGUI3.4.0.tar.gz"
+    sha256: "d1d5f294670ae71f7200ed4b30859018281d8cfd45d6a38d18b97a4aba604c42"
+patches:
+  "3.4.0":
+    - patch_file: "patches/3.4.0/CMakeLists.txt.patch"
+requirements:
+  - "ogre3d/[1.x]@anotherfoxguy/stable"
+  - "freetype/[2.x]"
+  - "zlib/[1.x]"
