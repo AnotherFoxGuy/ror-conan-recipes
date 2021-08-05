@@ -1,11 +1,12 @@
 sources:
   "1.11.6.1":
-    url: "https://github.com/only-a-ptr/ogre/archive/0ee9c1761cb90e8864ae9b93d9901affa5522444.zip"
+    url: "https://github.com/AnotherFoxGuy/ogre/archive/refs/tags/1.11.6.1.tar.gz"
     sha256: "e58f2fc55bad64f75a43b309ccfaccdb0b9889fbed20547e51f10d7d4824ab9f"
 patches:
   "1.11.6.1":
     - patch_file: "patches/1.11.6.1/CMakeLists.txt.patch"
     - patch_file: "patches/1.11.6.1/Dependencies.cmake.patch"
+    - patch_file: "patches/1.11.6.1/Samples-CMakeList.txt.patch"
 requirements:
   - "zlib/[1.x]"
   - "zziplib/[0.13.x]"
