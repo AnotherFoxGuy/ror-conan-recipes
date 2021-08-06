@@ -1,0 +1,4 @@
+sources:
+  "1.5.1":
+    url: "https://github.com/wgois/OIS/archive/refs/tags/v1.5.1.tar.gz"
+    sha256: "614f6ef6d69cf6d84f1b50efff46a6c1acce426933e5f0dcf29862ea8332af73"
