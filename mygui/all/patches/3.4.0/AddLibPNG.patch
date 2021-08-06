@@ -1,0 +1,27 @@
+--- MyGUIEngine/CMakeLists.txt
++++ MyGUIEngine/CMakeLists.txt
+@@ -41,8 +41,24 @@
+ endif()
+ 
+ if (MYGUI_USE_FREETYPE)
++	# FreeType from conan has seperate libraries
++	find_package(PNG)
++	find_package(BZip2)
++
++	find_library(BROTLICOMMON_LIBRARY NAMES brotlicommon brotlicommon-static)
++	find_library(BROTLIDEC_LIBRARY NAMES brotlidec brotlidec-static)
++
++	if(NOT ${BROTLIDEC_LIBRARY} STREQUAL "BROTLICOMMON_LIBRARY-NOTFOUND" AND NOT ${BROTLIDEC_LIBRARY} STREQUAL "BROTLIDEC_LIBRARY-NOTFOUND")
++		set(BROTLI_LIBRARIES ${BROTLICOMMON_LIBRARY} ${BROTLIDEC_LIBRARY})
++		message(STATUS "Brotli libraries found: ${BROTLI_LIBRARIES}")
++	else()
++		message(WARNING "Brotli library not found: ${BROTLICOMMON_LIBRARY} ${BROTLIDEC_LIBRARY}")
++	endif()
+ 	target_link_libraries(${PROJECTNAME}
+ 		${FREETYPE_LIBRARIES}
++		${PNG_LIBRARIES}
++		${BZIP2_LIBRARIES} 
++		${BROTLI_LIBRARIES}
+ 		${ZLIB_LIBRARIES}
+ 	)
+ endif()
