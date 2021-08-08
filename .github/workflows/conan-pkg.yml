@@ -1,0 +1,45 @@
+on:
+  push:
+    branches:
+      - main
+
+name: conan
+
+jobs:
+  run-conan:
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: Ubuntu 20.04
+            os: ubuntu-20.04
+          - name: Ubuntu 18.04
+            os: ubuntu-18.04
+          - name: VS 2017
+            os: windows-2016
+          - name: VS 2019
+            os: windows-2019
+
+    name: ${{ matrix.config.name }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+
+      - name: Install Conan
+        run: pip install -U conan pyyaml
+
+      - name: Install Conan
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          conan profile new default --detect
+          conan profile update settings.compiler.libcxx=libstdc++11 default
+
+      - name: Run
+        env:
+          CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
+          CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+        run: |
+          conan remote add ror-v2 https://artifactory.anotherfoxguy.com/artifactory/api/conan/rigs-of-rods
+          python build.py
