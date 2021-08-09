@@ -9,9 +9,12 @@ class freeimageConan(ConanFile):
     url = "https://github.com/AnotherFoxGuy/conan-freeimage"
     description = "FreeImage is an Open Source library project for developers who would like to support popular graphics image formats like PNG, BMP, JPEG, TIFF and others as needed by today's multimedia applications."
     settings = "os", "compiler", "build_type", "arch"
+    exports_sources = "patches/**"
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version], strip_root=True)
+        for patch in self.conan_data["patches"][self.version]:
+            tools.patch(**patch)
 
     def build(self):
         if os_info.is_windows:
