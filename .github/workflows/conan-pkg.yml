@@ -3,6 +3,7 @@ env:
   CONAN_REMOTES: "https://artifactory.anotherfoxguy.com/artifactory/api/conan/rigs-of-rods"
   CONAN_UPLOAD: "https://artifactory.anotherfoxguy.com/artifactory/api/conan/rigs-of-rods"
   CONAN_CHANNEL: "stable"
+  CONAN_USERNAME: "anotherfoxguy"
 
 on:
   push:
