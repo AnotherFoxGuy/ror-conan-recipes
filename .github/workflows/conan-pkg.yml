@@ -2,6 +2,7 @@ env:
   BPT_SPLIT_BY_BUILD_TYPES: "true"
   CONAN_REMOTES: "https://artifactory.anotherfoxguy.com/artifactory/api/conan/rigs-of-rods"
   CONAN_UPLOAD: "https://artifactory.anotherfoxguy.com/artifactory/api/conan/rigs-of-rods"
+  CONAN_CHANNEL: "stable"
 
 on:
   push:
