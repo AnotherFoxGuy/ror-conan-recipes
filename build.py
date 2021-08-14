@@ -11,9 +11,11 @@ def system(command):
         raise Exception("Error while executing:\n\t %s" % command)
 
 
-packages = glob("./*/")
+dirs = glob("./*/")
 
-for p in packages:
+packages = []
+
+for p in dirs:
     path = f'{p}/config.yml'
     if not os.path.isfile(path):
         continue
@@ -22,8 +24,15 @@ for p in packages:
 
         for val in config.values():
             for v, y in val.items():
-                system(f"conan create {p}{y['folder']} {v}@anotherfoxguy/stable -s=build_type=Release -k -b=missing")
-                system(f"conan create {p}{y['folder']} {v}@anotherfoxguy/stable -s=build_type=Debug   -k -b=missing")
+                packages.append(f"{p}{y['folder']} {v}@anotherfoxguy/stable")
+
+for pkg in packages:
+    system(f"conan export {pkg}")
+
+for pkg in packages:
+    system(f"conan create {pkg} -s=build_type=Release -k -b=missing")
+    system(f"conan create {pkg} -s=build_type=Debug   -k -b=missing")
+
 
 data = list(filter(lambda k: 'anotherfoxguy' in k, subprocess.run(['conan','search','*','--raw'], stdout=subprocess.PIPE).stdout.decode("utf-8").split()))
 
