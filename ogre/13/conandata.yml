@@ -1,0 +1,16 @@
+sources:
+  "13.0.0":
+    url: "https://github.com/OGRECave/ogre/archive/refs/tags/v13.0.0.tar.gz"
+    sha256: "404c91b0ab27edb45a643bc268143589c8f5160125d531cbf5d958fa55136063"
+patches:
+  "13.0.0":
+    - patch_file: "patches/13.0.0/CMakeLists.txt.patch"
+    - patch_file: "patches/13.0.0/AddLibPNG.patch"
+    - patch_file: "patches/13.0.0/pugixml-fix.patch"
+requirements:
+  - "zlib/[1.x]"
+  - "zziplib/[0.13.x]"
+  - "freetype/[2.x]"
+  - "freeimage/[3.x]@anotherfoxguy/stable"
+  - "cg-toolkit/3.1@anotherfoxguy/stable"
+  - "pugixml/[1.x]"
