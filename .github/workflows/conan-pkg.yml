@@ -30,8 +30,8 @@ jobs:
       - name: Install Conan
         run: pip install -U conan pyyaml
 
-      - name: Install Conan
-        if: startsWith(matrix.os, 'ubuntu')
+      - name: Fix libstdc++11
+        if: startsWith(matrix.config.os, 'ubuntu')
         run: |
           conan profile new default --detect
           conan profile update settings.compiler.libcxx=libstdc++11 default
