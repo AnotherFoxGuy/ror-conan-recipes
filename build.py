@@ -30,8 +30,8 @@ for pkg in packages:
     system(f"conan export {pkg}")
 
 for pkg in packages:
-    system(f"conan create {pkg} -s=build_type=Release -k -b=missing")
-    system(f"conan create {pkg} -s=build_type=Debug   -k -b=missing")
+    system(f"conan create {pkg} -s=build_type=Release -k -b=outdated")
+    system(f"conan create {pkg} -s=build_type=Debug   -k -b=outdated")
 
 
 data = list(filter(lambda k: 'anotherfoxguy' in k, subprocess.run(['conan','search','*','--raw'], stdout=subprocess.PIPE).stdout.decode("utf-8").split()))
