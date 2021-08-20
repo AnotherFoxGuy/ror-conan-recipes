@@ -1,0 +1,19 @@
+--- CMakeLists.txt      
++++ CMakeLists.txt
+@@ -20,6 +20,8 @@
+ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ set(CMAKE_CXX_EXTENSIONS OFF)
+ 
++include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
++
+ if(CMAKE_VS_PLATFORM_NAME STREQUAL "Tegra-Android")
+ 	set(CMAKE_LINK_LIBRARY_FLAG "")
+ endif()
+@@ -74,6 +76,7 @@
+   "${PROJECT_SOURCE_DIR}/CMake"
+   "${PROJECT_SOURCE_DIR}/CMake/Utils"
+   "${PROJECT_SOURCE_DIR}/CMake/Packages"
++  "${CMAKE_BINARY_DIR}"
+ )
+ 
+ include(CMakeDependentOption)
