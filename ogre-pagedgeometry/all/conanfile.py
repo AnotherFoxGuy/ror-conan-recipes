@@ -34,3 +34,6 @@ class CaelumConan(ConanFile):
             'include/PagedGeometry'
         ]
         self.cpp_info.libs = tools.collect_libs(self)
+
+    def package_id(self):
+        self.info.requires["ogre3d"].full_recipe_mode()

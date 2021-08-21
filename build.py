@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-import os, sys
+import os
+import sys
 import platform
 from glob import glob
 import yaml
 import subprocess
+
 
 def system(command):
     retcode = os.system(command)
@@ -34,7 +36,8 @@ for pkg in packages:
     system(f"conan create {pkg} -s=build_type=Debug   -k -b=outdated")
 
 
-data = list(filter(lambda k: 'anotherfoxguy' in k, subprocess.run(['conan','search','*','--raw'], stdout=subprocess.PIPE).stdout.decode("utf-8").split()))
+data = list(filter(lambda k: 'anotherfoxguy' in k, subprocess.run(
+    ['conan', 'search', '*', '--raw'], stdout=subprocess.PIPE).stdout.decode("utf-8").split()))
 
 for d in data:
     system(f"conan upload {d} -r ror-v2 --all --force")

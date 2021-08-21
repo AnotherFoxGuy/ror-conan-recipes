@@ -40,3 +40,6 @@ class MyGUIConan(ConanFile):
         # Directories where libraries can be found
         self.cpp_info.libdirs = ['lib', 'lib/release', 'lib/debug']
         self.cpp_info.libs = tools.collect_libs(self)
+
+    def package_id(self):
+        self.info.requires["ogre3d"].full_recipe_mode()
