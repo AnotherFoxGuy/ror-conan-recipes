@@ -7,7 +7,7 @@ class CaelumConan(ConanFile):
     url = "https://github.com/RigsOfRods/Caelum/issues"
     description = "Caelum is a library which provides cross-platform socket abstraction"
     settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake_paths"
+    generators = "cmake_find_package"
     exports_sources = "patches/**"
 
     def requirements(self):
@@ -29,6 +29,7 @@ class CaelumConan(ConanFile):
         cmake.install()
 
     def package_info(self):
+        self.cpp_info.name = "Caelum"
         self.cpp_info.includedirs = [
             'include',
             'include/Caelum'
@@ -36,5 +37,4 @@ class CaelumConan(ConanFile):
         self.cpp_info.libs = tools.collect_libs(self)
 
     def package_id(self):
-        self.cpp_info.name = "Caelum"
         self.info.requires["ogre3d"].full_recipe_mode()

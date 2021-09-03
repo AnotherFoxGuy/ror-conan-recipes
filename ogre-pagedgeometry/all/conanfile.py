@@ -1,13 +1,13 @@
 from conans import ConanFile, CMake, tools
 
 
-class CaelumConan(ConanFile):
+class PagedGeometryConan(ConanFile):
     name = "ogre3d-pagedgeometry"
     license = "GNU Lesser General Public License v2.1"
     url = "https://github.com/RigsOfRods/Caelum/issues"
     description = "PagedGeometry is a plugin for OGRE for rendering of dense vegetation "
     settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake_paths"
+    generators = "cmake_find_package"
     exports_sources = "patches/**"
 
     def requirements(self):
@@ -29,6 +29,7 @@ class CaelumConan(ConanFile):
         cmake.install()
 
     def package_info(self):
+        self.cpp_info.name = "PagedGeometry"
         self.cpp_info.includedirs = [
             'include',
             'include/PagedGeometry'
@@ -36,5 +37,4 @@ class CaelumConan(ConanFile):
         self.cpp_info.libs = tools.collect_libs(self)
 
     def package_id(self):
-        self.cpp_info.name = "PagedGeometry"
         self.info.requires["ogre3d"].full_recipe_mode()

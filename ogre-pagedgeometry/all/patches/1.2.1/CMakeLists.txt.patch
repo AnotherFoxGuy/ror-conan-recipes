@@ -1,14 +1,15 @@
 --- CMakeLists.txt
 +++ CMakeLists.txt
-@@ -9,6 +9,7 @@
- cmake_minimum_required( VERSION 3.0.2 )
- set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake )
+@@ -7,7 +7,7 @@
+ # cmake system for PagedGeometry updated on 6-10-2017 by Edgar{at}AnotherFoxGuy{DOT}com
  
-+include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+ cmake_minimum_required( VERSION 3.0.2 )
+-set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake )
++set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/cmake )
+ 
  
  # add some functions we use that are shipped with cmake
- INCLUDE(CheckLibraryExists)
-@@ -20,7 +21,7 @@
+@@ -20,7 +20,7 @@
  # some versioning things
  SET(LIB_MAJOR_VERSION "1")
  SET(LIB_MINOR_VERSION "2")
