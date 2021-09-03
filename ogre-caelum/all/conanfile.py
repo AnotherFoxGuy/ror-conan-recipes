@@ -36,4 +36,5 @@ class CaelumConan(ConanFile):
         self.cpp_info.libs = tools.collect_libs(self)
 
     def package_id(self):
+        self.cpp_info.name = "Caelum"
         self.info.requires["ogre3d"].full_recipe_mode()

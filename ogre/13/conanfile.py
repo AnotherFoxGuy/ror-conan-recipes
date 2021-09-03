@@ -53,6 +53,7 @@ class OGREConan(ConanFile):
         cmake.install()
 
     def package_info(self):
+        self.cpp_info.name = "OGRE"
         self.cpp_info.includedirs = [
             "include",
             "include/OGRE",
