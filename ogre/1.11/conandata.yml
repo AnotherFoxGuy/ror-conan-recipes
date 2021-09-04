@@ -6,7 +6,7 @@ patches:
   "1.11.6.1":
     - patch_file: "patches/1.11.6.1/CMakeLists.txt.patch"
     - patch_file: "patches/1.11.6.1/Samples-CMakeList.txt.patch"
-    - patch_file: "patches/1.11.6.1/FindPkgMacros.cmake.patch"
+    - patch_file: "patches/1.11.6.1/FixOverlayCMakeLists.txt.patch"
 requirements:
   - "zlib/[1.x]"
   - "zziplib/[0.13.x]"
