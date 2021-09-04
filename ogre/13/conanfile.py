@@ -8,7 +8,7 @@ class OGREConan(ConanFile):
     url = "https://github.com/AnotherFoxGuy/conan-OGRE"
     description = "scene-oriented, flexible 3D engine written in C++"
     settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake_paths", "cmake_find_package"
+    generators = "cmake_find_package"
     exports_sources = "patches/**"
 
     def requirements(self):
