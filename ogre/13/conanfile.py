@@ -30,6 +30,8 @@ class OGREConan(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.definitions["OGRE_BUILD_DEPENDENCIES"] = "OFF"
+        cmake.definitions["OGRE_COPY_DEPENDENCIES"] = "OFF"
+        cmake.definitions["OGRE_INSTALL_DEPENDENCIES"] = "OFF"
         cmake.definitions["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
         cmake.definitions["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
         cmake.definitions["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
