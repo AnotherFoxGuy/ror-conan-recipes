@@ -26,5 +26,6 @@ class GcConan(ConanFile):
                 self.copy("*.lib", src="lib", dst="lib", keep_path=False)
                 self.copy("*.dll", src="bin", dst="bin", keep_path=False)
 
-    def package_info(self):
+    def package_info(self): 
+        self.cpp_info.name = "Cg"
         self.cpp_info.libs = tools.collect_libs(self)

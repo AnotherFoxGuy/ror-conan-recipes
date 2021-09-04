@@ -36,4 +36,5 @@ class freeimageConan(ConanFile):
         self.copy("*.a", dst="lib", src="Source", keep_path=False)
 
     def package_info(self):
+        self.cpp_info.name = "FreeImage"
         self.cpp_info.libs = tools.collect_libs(self)
