@@ -36,6 +36,8 @@ class OGREConan(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.definitions["OGRE_BUILD_DEPENDENCIES"] = "OFF"
+        cmake.definitions["OGRE_COPY_DEPENDENCIES"] = "OFF"
+        cmake.definitions["OGRE_INSTALL_DEPENDENCIES"] = "OFF"
         cmake.definitions["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
         cmake.definitions["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
         cmake.definitions["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
@@ -46,9 +48,9 @@ class OGREConan(ConanFile):
         cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D9"] = "ON"
         cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D11"] = "ON"
         cmake.definitions["OGRE_BUILD_RENDERSYSTEM_GL3PLUS"] = "OFF"
-        cmake.definitions["OGRE_RESOURCEMANAGER_STRICT"] = self.options.resourcemanager_strict
         cmake.definitions["OGRE_INSTALL_SAMPLES"] = "OFF"
         cmake.definitions["OGRE_BUILD_PLUGIN_DOT_SCENE"] = "OFF"
+        cmake.definitions["OGRE_RESOURCEMANAGER_STRICT"] = self.options.resourcemanager_strict
         if os_info.is_windows:
             cmake.definitions["CMAKE_CXX_FLAGS"] = "-D_OGRE_FILESYSTEM_ARCHIVE_UNICODE"
         cmake.configure()
