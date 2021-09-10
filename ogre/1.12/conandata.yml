@@ -5,7 +5,7 @@ sources:
 patches:
   "1.12.13":
     - patch_file: "patches/1.12.13/CMakeLists.txt.patch"
-    - patch_file: "patches/1.12.13/AddLibPNG.patch"
+    - patch_file: "patches/1.12.13/FixFindOpenGLES2.cmake.patch"
     - patch_file: "patches/1.12.13/pugixml-fix.patch"
     - patch_file: "patches/1.12.13/FindPkgMacros.cmake.patch"
 requirements:

@@ -8,6 +8,12 @@ class OGREConan(ConanFile):
     url = "https://github.com/AnotherFoxGuy/conan-OGRE"
     description = "scene-oriented, flexible 3D engine written in C++"
     settings = "os", "compiler", "build_type", "arch"
+    options = {
+        "resourcemanager_strict": [0, 1, 2]
+    }
+    default_options = {
+        "resourcemanager_strict": 0
+    }
     generators = "cmake_paths", "cmake_find_package"
     exports_sources = "patches/**"
 
@@ -34,13 +40,13 @@ class OGREConan(ConanFile):
         cmake.definitions["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
         cmake.definitions["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
         cmake.definitions["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
-        cmake.definitions["OGRE_BUILD_PLUGIN_STBI"] = "OFF"
+        cmake.definitions["OGRE_BUILD_PLUGIN_STBI"] = "ON"
         cmake.definitions["OGRE_BUILD_COMPONENT_BITES"] = "ON"
         cmake.definitions["OGRE_BUILD_SAMPLES"] = "OFF"
         cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D9"] = "ON"
         cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D11"] = "ON"
         cmake.definitions["OGRE_BUILD_RENDERSYSTEM_GL3PLUS"] = "OFF"
-        cmake.definitions["OGRE_RESOURCEMANAGER_STRICT"] = 0
+        cmake.definitions["OGRE_RESOURCEMANAGER_STRICT"] = self.options.resourcemanager_strict
         cmake.definitions["OGRE_INSTALL_SAMPLES"] = "OFF"
         cmake.definitions["OGRE_BUILD_PLUGIN_DOT_SCENE"] = "OFF"
         if os_info.is_windows:
