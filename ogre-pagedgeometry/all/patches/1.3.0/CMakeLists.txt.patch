@@ -1,7 +1,7 @@
 --- CMakeLists.txt
 +++ CMakeLists.txt
 @@ -7,7 +7,7 @@
- # cmake system for Caelum updated on 2-9-2021 by Edgar{at}AnotherFoxGuy{DOT}com
+ # cmake system for PagedGeometry updated on 2-9-2021 by Edgar{at}AnotherFoxGuy{DOT}com
  
  cmake_minimum_required(VERSION 3.0.2)
 -set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
@@ -9,3 +9,12 @@
  
  # define the project
  project(
+@@ -101,7 +101,7 @@
+ ENDIF ()
+ 
+ # --- Ogre 3D graphics engine ---
+-find_package(OGRE REQUIRED CONFIG)
++find_package(OGRE REQUIRED)
+ 
+ # now add the directories
+ add_subdirectory(source)

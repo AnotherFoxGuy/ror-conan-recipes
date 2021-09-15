@@ -1,8 +1,13 @@
 sources:
-  "0.6.4":
+  "0.6.3":
     url: "https://github.com/OGRECave/ogre-caelum/archive/94913d2040a41148c14001c33a0bdc0f100842f8.zip"
     sha256: "9de4159ae8050fd0858b3c1c09005aa50b36079a3a06accfb67203669be9a09e"
+  "0.6.4":
+    url: "https://github.com/OGRECave/ogre-caelum/archive/115eecc6ff347d64aed289e4114fb9efc2a81cf6.zip"
+    sha256: "d218ed22fa9c32eabe217f59792894a8eb45d79757187d2293809aba5cf5b339"
 patches:
+  "0.6.3":
+    - patch_file: "patches/0.6.3/CMakeLists.txt.patch" 
   "0.6.4":
     - patch_file: "patches/0.6.4/CMakeLists.txt.patch" 
 requirements:
