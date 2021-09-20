@@ -12,14 +12,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - name: Ubuntu 20.04
-            os: ubuntu-20.04
-          - name: Ubuntu 18.04
-            os: ubuntu-18.04
-          - name: VS 2017
-            os: windows-2016
-          - name: VS 2019
-            os: windows-2019
+          - name: Ubuntu
+            os: ubuntu-latest
+          - name: Windows
+            os: windows-latest
 
     name: ${{ matrix.config.name }}
     steps:
@@ -35,6 +31,10 @@ jobs:
         run: |
           conan profile new default --detect
           conan profile update settings.compiler.libcxx=libstdc++11 default
+
+      - name: Install DX9 SDK
+        if: startsWith(matrix.config.os, 'windows')
+        run: choco install directx-sdk -y
 
       - name: Run
         env:
