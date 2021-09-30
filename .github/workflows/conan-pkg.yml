@@ -15,9 +15,11 @@ jobs:
           - name: Ubuntu
             os: ubuntu-latest
           - name: Windows
-            os: windows-latest
+            os: windows-2016
 
     name: ${{ matrix.config.name }}
+    env:
+      DXSDK_DIR: C:\apps\Microsoft DirectX SDK\
     steps:
       - uses: actions/checkout@v2
 
@@ -34,7 +36,11 @@ jobs:
 
       - name: Install DX9 SDK
         if: startsWith(matrix.config.os, 'windows')
-        run: choco install directx-sdk -y
+        shell: cmake -P {0}
+        run: |
+          file(MAKE_DIRECTORY $ENV{DXSDK_DIR})
+          file(DOWNLOAD http://prdownloads.sourceforge.net/rigs-of-rods/DirectX-SDK.zip "$ENV{TMP}/DirectX.zip" SHOW_PROGRESS)
+          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf "$ENV{TMP}/DirectX.zip" WORKING_DIRECTORY "$ENV{DXSDK_DIR}")
 
       - name: Run
         env:
