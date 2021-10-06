@@ -19,8 +19,12 @@ class OGREConan(ConanFile):
         if os_info.is_linux:
             if os_info.with_apt:
                 installer = SystemPackageTool()
+                installer.install("libgles2-mesa-dev")
+                installer.install("libglu1-mesa-dev")
                 installer.install("libx11-dev")
                 installer.install("libxaw7-dev")
+                installer.install("libxrandr-dev")
+                installer.install("libxt-dev")
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version], strip_root=True)

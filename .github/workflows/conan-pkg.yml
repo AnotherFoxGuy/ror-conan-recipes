@@ -9,7 +9,7 @@ jobs:
   run-conan:
     runs-on: ${{ matrix.config.os }}
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         config:
           - name: Ubuntu
