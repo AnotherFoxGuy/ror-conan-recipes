@@ -8,17 +8,21 @@ class MyGUIConan(ConanFile):
     url = "https://github.com/AnotherFoxGuy/conan-MyGUI"
     description = "Fast, flexible and simple GUI."
     settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake_paths"
+    generators = "cmake_paths", "cmake_find_package"
     exports_sources = "patches/**"
+    options = {"system_ogre": [True, False]}
+    default_options = {"system_ogre": False}
 
     def requirements(self):
-        for req in self.conan_data["requirements"]:
-            self.requires(req)
+        if not self.options.system_ogre:
+            for req in self.conan_data["requirements"]:
+                self.requires(req)
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version], strip_root=True)
-        for patch in self.conan_data["patches"][self.version]:
-            tools.patch(**patch)
+        if not self.options.system_ogre:
+            for patch in self.conan_data["patches"][self.version]:
+                tools.patch(**patch)
 
     def build(self):
         cmake = CMake(self)
@@ -42,4 +46,5 @@ class MyGUIConan(ConanFile):
         self.cpp_info.libs = tools.collect_libs(self)
 
     def package_id(self):
-        self.info.requires["ogre3d"].full_recipe_mode()
+        if not self.options.system_ogre:
+            self.info.requires["ogre3d"].full_recipe_mode()

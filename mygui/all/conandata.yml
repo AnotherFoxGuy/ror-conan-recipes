@@ -8,10 +8,8 @@ sources:
 patches:
   "3.4.0":
     - patch_file: "patches/3.4.0/CMakeLists.txt.patch"
-    - patch_file: "patches/3.4.0/AddLibPNG.patch"
   "3.4.1":
     - patch_file: "patches/3.4.1/CMakeLists.txt.patch"
-    - patch_file: "patches/3.4.1/AddLibPNG.patch"
 requirements:
   - "ogre3d/[1.x]@anotherfoxguy/stable"
   - "freetype/[2.x]"
