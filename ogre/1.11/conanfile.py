@@ -38,7 +38,7 @@ class OGREConan(ConanFile):
         cmake.definitions["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
         cmake.definitions["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
         cmake.definitions["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
-        cmake.definitions["OGRE_BUILD_PLUGIN_STBI"] = "OFF"
+        cmake.definitions["OGRE_BUILD_PLUGIN_STBI"] = "ON"
         cmake.definitions["OGRE_BUILD_COMPONENT_BITES"] = "ON"
         cmake.definitions["OGRE_BUILD_SAMPLES"] = "OFF"
         cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D9"] = "ON"
