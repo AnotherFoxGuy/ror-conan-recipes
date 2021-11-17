@@ -15,6 +15,8 @@ dirs = glob("./*/")
 
 packages = []
 
+conan_profile = os.getenv('CONAN_PROFILE')
+
 for p in dirs:
     path = f'{p}/config.yml'
     if not os.path.isfile(path):
@@ -30,8 +32,7 @@ for pkg in packages:
     system(f"conan export {pkg}")
 
 for pkg in packages:
-    system(f"conan create {pkg} -s=build_type=Release -k -b=outdated")
-    system(f"conan create {pkg} -s=build_type=Debug   -k -b=outdated")
+    system(f"conan create {pkg} -pr=\"./.conan-profiles/{conan_profile}\" -k -b=outdated")
 
 
 data = list(filter(lambda k: 'anotherfoxguy' in k, subprocess.run(

@@ -12,10 +12,26 @@ jobs:
       fail-fast: true
       matrix:
         config:
-          - name: Ubuntu
-            os: ubuntu-latest
-          - name: Windows
-            os: windows-2016
+          # - name: Ubuntu Debug
+          #   os: ubuntu-latest
+          #   conan-profile: ubuntu-debug
+          # - name: Ubuntu Release
+          #   os: ubuntu-latest
+          #   conan-profile: ubuntu-release
+
+          # - name: Windows 2016 Debug
+          #   os: windows-2016
+          #   conan-profile: vs-2016-debug
+          # - name: Windows 2016 Release
+          #   os: windows-2016
+          #   conan-profile: vs-2016-release
+
+          - name: Windows 2022 Debug
+            os: windows-2022
+            conan-profile: vs-2022-debug
+          - name: Windows 2022 Release
+            os: windows-2022
+            conan-profile: vs-2022-release
 
     name: ${{ matrix.config.name }}
     env:
@@ -26,13 +42,13 @@ jobs:
       - uses: actions/setup-python@v2
 
       - name: Install Conan
-        run: pip install -U conan pyyaml
+        run: |
+          pip install -U conan pyyaml
+          conan profile new default --detect
 
       - name: Fix libstdc++11
         if: startsWith(matrix.config.os, 'ubuntu')
-        run: |
-          conan profile new default --detect
-          conan profile update settings.compiler.libcxx=libstdc++11 default
+        run: conan profile update settings.compiler.libcxx=libstdc++11 default
 
       - name: Install DX9 SDK
         if: startsWith(matrix.config.os, 'windows')
@@ -46,6 +62,7 @@ jobs:
         env:
           CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
           CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+          CONAN_PROFILE: ${{ matrix.config.conan-profile }}
         run: |
           conan remote add ror-v2 https://artifactory.anotherfoxguy.com/artifactory/api/conan/rigs-of-rods
           python build.py
