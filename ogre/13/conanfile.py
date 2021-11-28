@@ -21,6 +21,10 @@ class OGREConan(ConanFile):
                 installer = SystemPackageTool()
                 installer.install("libx11-dev")
                 installer.install("libxaw7-dev")
+                installer.install("libxrandr-dev")
+                installer.install("libgles2-mesa-dev")
+                installer.install("libvulkan-dev")
+                installer.install("glslang-dev")
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version], strip_root=True)

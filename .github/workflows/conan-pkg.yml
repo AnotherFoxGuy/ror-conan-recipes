@@ -12,19 +12,19 @@ jobs:
       fail-fast: true
       matrix:
         config:
-          # - name: Ubuntu Debug
-          #   os: ubuntu-latest
-          #   conan-profile: ubuntu-debug
-          # - name: Ubuntu Release
-          #   os: ubuntu-latest
-          #   conan-profile: ubuntu-release
+          - name: Ubuntu Debug
+            os: ubuntu-latest
+            conan-profile: ubuntu-debug
+          - name: Ubuntu Release
+            os: ubuntu-latest
+            conan-profile: ubuntu-release
 
-          # - name: Windows 2016 Debug
-          #   os: windows-2016
-          #   conan-profile: vs-2016-debug
-          # - name: Windows 2016 Release
-          #   os: windows-2016
-          #   conan-profile: vs-2016-release
+          - name: Windows 2016 Debug
+            os: windows-2016
+            conan-profile: vs-2016-debug
+          - name: Windows 2016 Release
+            os: windows-2016
+            conan-profile: vs-2016-release
 
           - name: Windows 2022 Debug
             os: windows-2022
@@ -55,7 +55,7 @@ jobs:
         shell: cmake -P {0}
         run: |
           file(MAKE_DIRECTORY $ENV{DXSDK_DIR})
-          file(DOWNLOAD http://prdownloads.sourceforge.net/rigs-of-rods/DirectX-SDK.zip "$ENV{TMP}/DirectX.zip" SHOW_PROGRESS)
+          file(DOWNLOAD https://cdn.anotherfoxguy.com/DirectX-SDK.zip "$ENV{TMP}/DirectX.zip" SHOW_PROGRESS)
           execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf "$ENV{TMP}/DirectX.zip" WORKING_DIRECTORY "$ENV{DXSDK_DIR}")
 
       - name: Run
