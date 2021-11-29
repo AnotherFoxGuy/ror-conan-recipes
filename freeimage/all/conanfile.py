@@ -19,9 +19,11 @@ class freeimageConan(ConanFile):
 
     def build(self):
         if os_info.is_windows:
-            for file in glob.glob("./**/*2017.vcxproj", recursive=True):
-                print(f"Patching winsdk in file {file}")
-                tools.replace_in_file(file, "10.0.16299.0", "10.0", strict=False)
+            version = tools.Version(self.settings.compiler.version)
+            if version.major > "15":
+                for file in glob.glob("./**/*2017.vcxproj", recursive=True):
+                    print(f"Patching winsdk in file {file}")
+                    tools.replace_in_file(file, "10.0.16299.0", "10.0", strict=False)
             msbuild = MSBuild(self)
             msbuild.build("FreeImage.2017.sln")
         else:

@@ -58,6 +58,9 @@ jobs:
           file(DOWNLOAD https://cdn.anotherfoxguy.com/DirectX-SDK.zip "$ENV{TMP}/DirectX.zip" SHOW_PROGRESS)
           execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf "$ENV{TMP}/DirectX.zip" WORKING_DIRECTORY "$ENV{DXSDK_DIR}")
 
+      - name: Enable Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1.10.0
+
       - name: Run
         env:
           CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
