@@ -1,6 +1,6 @@
+import glob
 from conans import ConanFile, MSBuild, tools, AutoToolsBuildEnvironment
 from conans.tools import os_info
-import glob
 
 
 class freeimageConan(ConanFile):
@@ -24,8 +24,14 @@ class freeimageConan(ConanFile):
                 for file in glob.glob("./**/*2017.vcxproj", recursive=True):
                     print(f"Patching winsdk in file {file}")
                     tools.replace_in_file(file, "10.0.16299.0", "10.0", strict=False)
+
+            if self.settings.build_type == "Debug":
+                _build_type = "Debug"
+            else:
+                _build_type = "Release"
+
             msbuild = MSBuild(self)
-            msbuild.build("FreeImage.2017.sln")
+            msbuild.build("FreeImage.2017.sln", build_type=_build_type)
         else:
             autotools = AutoToolsBuildEnvironment(self)
             autotools.make()
