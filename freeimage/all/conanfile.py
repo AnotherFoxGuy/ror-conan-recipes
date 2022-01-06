@@ -31,7 +31,9 @@ class freeimageConan(ConanFile):
                 _build_type = "Release"
 
             msbuild = MSBuild(self)
-            msbuild.build("FreeImage.2017.sln", build_type=_build_type)
+            msbuild.build(
+                "FreeImage.2017.sln", build_type=_build_type, platforms={"x86": "Win32"}
+            )
         else:
             autotools = AutoToolsBuildEnvironment(self)
             autotools.make()
