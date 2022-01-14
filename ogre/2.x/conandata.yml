@@ -1,0 +1,15 @@
+sources:
+  "2.3.0":
+    url: "https://github.com/OGRECave/ogre-next/archive/refs/tags/v2.3.0.tar.gz"
+    sha256: "3294eae7f8460f450a99fc82eff6a975d993ee591487c09957265852a71bea4a"
+patches:
+  "2.3.0":
+    - patch_file: "patches/2.3.0/CMakeLists.txt.patch"
+    - patch_file: "patches/2.3.0/pugixml-fix.patch"
+    - patch_file: "patches/2.3.0/FindPkgMacros.cmake.patch"
+requirements:
+  - "zlib/[1.x]"
+  - "zziplib/[0.13.x]"
+  - "freetype/[2.x]"
+  - "freeimage/[3.x]@anotherfoxguy/stable"
+  - "pugixml/[1.x]"
