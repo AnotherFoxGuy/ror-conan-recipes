@@ -1,0 +1,4 @@
+sources:
+  "3.0.3.1":
+    url: "https://github.com/GerHobbelt/pthread-win32/archive/refs/tags/v3.0.3.1.tar.gz"
+    sha256: "5c9891d6a601c862054d5763c609c5634f9d5c767780dbc952297d3df0769ea8"
