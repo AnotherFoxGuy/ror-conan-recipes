@@ -5,10 +5,15 @@ sources:
   "1.3.0":
     url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/18ca8a0abd26cb5d52b99ad8e8fa0c8f7e6e7d79.zip"
     sha256: "4a3d97d75f7417208403bd0f5e8c3b010ae0dd9a36968f78ecc5cd0161b2ddb9"
+  "1.3.0.1":
+    url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/95194bc024188ad08d4b85fb3b7141334cf041f7.zip"
+    sha256: "d3354c87494dcca83b1e65da33066bfa26aa2801b413e74904e85f4292e4c9ef"
 patches:
   "1.2.0":
     - patch_file: "patches/1.2.0/CMakeLists.txt.patch" 
   "1.3.0":
+    - patch_file: "patches/1.3.0/CMakeLists.txt.patch" 
+  "1.3.0.1":
     - patch_file: "patches/1.3.0/CMakeLists.txt.patch" 
 requirements:
   - "ogre3d/[1.x]@anotherfoxguy/stable"
