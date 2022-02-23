@@ -2,11 +2,18 @@ sources:
   "13.2.4":
     url: "https://github.com/OGRECave/ogre/archive/refs/tags/v13.2.4.tar.gz"
     sha256: "210abe551ca375a79eb45a3802e874108055999fa7292365734689a159dec4b3"
+  "13.3.1":
+    url: "https://github.com/OGRECave/ogre/archive/refs/tags/v13.3.1.tar.gz"
+    sha256: "8b874952a8f6161b3307c29df00f21a0d5710de5e85bf41383b405717da07bb4"
 patches:
   "13.2.4":
     - patch_file: "patches/13.2.4/CMakeLists.txt.patch"
     - patch_file: "patches/13.2.4/pugixml-fix.patch"
     - patch_file: "patches/13.2.4/FindPkgMacros.cmake.patch"
+  "13.3.1":
+    - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
+    - patch_file: "patches/13.3.1/pugixml-fix.patch"
+    - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
 requirements:
   - "zlib/[1.x]"
   - "zziplib/[0.13.x]"
