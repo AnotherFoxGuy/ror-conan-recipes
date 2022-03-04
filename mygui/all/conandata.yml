@@ -8,9 +8,10 @@ sources:
 patches:
   "3.4.0":
     - patch_file: "patches/3.4.0/CMakeLists.txt.patch"
+    - patch_file: "patches/3.4.0/MyGUI_OgreRenderManager.cpp.patch"
   "3.4.1":
     - patch_file: "patches/3.4.1/CMakeLists.txt.patch"
 requirements:
-  - "ogre3d/[1.x]@anotherfoxguy/stable"
+  - "ogre3d/[13.x]@anotherfoxguy/stable"
   - "freetype/[2.x]"
   - "zlib/[1.x]"
