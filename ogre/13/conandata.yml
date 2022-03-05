@@ -14,6 +14,7 @@ patches:
     - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
+    - patch_file: "patches/13.3.1/scriptlexer.patch"
 requirements:
   - "zlib/[1.x]"
   - "zziplib/[0.13.x]"
