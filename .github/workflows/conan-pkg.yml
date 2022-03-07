@@ -37,7 +37,7 @@ jobs:
     env:
       DXSDK_DIR: C:\apps\Microsoft DirectX SDK\
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: actions/setup-python@v2
 
