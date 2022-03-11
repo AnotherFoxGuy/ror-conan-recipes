@@ -6,8 +6,8 @@ sources:
     url: "https://github.com/OGRECave/ogre-caelum/archive/115eecc6ff347d64aed289e4114fb9efc2a81cf6.zip"
     sha256: "d218ed22fa9c32eabe217f59792894a8eb45d79757187d2293809aba5cf5b339"
   "0.6.4.1":
-    url: "https://github.com/OGRECave/ogre-caelum/archive/374da61454d5dfe602b311088b3d462edc07d025.zip"
-    sha256: "cd021d41010b2ea10aed41458cb03648876f6292553f8df8d42526450d91b9e9"
+    url: "https://github.com/OGRECave/ogre-caelum/archive/7763bff99f758bbfcc5e7f9d751b2551e975545b.zip"
+    sha256: "069050b1039194324b0d1dddef887e83442b04d5843b4572ae5035da3e2d1ef6"
 patches:
   "0.6.3":
     - patch_file: "patches/0.6.3/CMakeLists.txt.patch" 

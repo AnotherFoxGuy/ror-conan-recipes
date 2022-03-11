@@ -5,7 +5,7 @@
  cmake_minimum_required(VERSION 3.0.2)
  
 +set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})
-+
++set(CMAKE_DEBUG_POSTFIX _d)
  # define the project
  project(
          Caelum
