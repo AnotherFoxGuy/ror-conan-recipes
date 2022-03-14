@@ -1,8 +1,0 @@
-sources-windows:
-  "1.2.198.1":
-    url: "https://sdk.lunarg.com/sdk/download/1.2.198.1/windows/VulkanSDK-1.2.198.1-Installer.exe"
-    sha256: "34ec3093570d6a57aef7740bab0b0b5786bd30355b6e34e1bd858bb98773aa60"
-sources-linux:
-  "1.2.198.1":
-    url: "https://sdk.lunarg.com/sdk/download/1.2.198.1/linux/vulkansdk-linux-x86_64-1.2.198.1.tar.gz"
-    sha256: "488df47afe317bc2cd1f03305f19e5ad7b58db12738f8ba097042ba57d758c9d"
