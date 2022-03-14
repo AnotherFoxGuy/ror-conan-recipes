@@ -3,7 +3,7 @@ from conans.tools import os_info
 
 
 class VulkanConan(ConanFile):
-    name = "vulkan-sdk"
+    name = "vulkan-sdk-bin"
     author = "Edgar Edgar@AnotherFoxGuy.com"
     settings = "os", "arch"
     no_copy_source = True
