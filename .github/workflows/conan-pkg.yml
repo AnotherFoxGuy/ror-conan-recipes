@@ -19,12 +19,12 @@ jobs:
             os: ubuntu-latest
             conan-profile: ubuntu-release
 
-          - name: Windows 2016 Debug
-            os: windows-2016
-            conan-profile: vs-2016-debug
-          - name: Windows 2016 Release
-            os: windows-2016
-            conan-profile: vs-2016-release
+          - name: Windows 2019 Debug
+            os: windows-2019
+            conan-profile: vs-2019-debug
+          - name: Windows 2019 Release
+            os: windows-2019
+            conan-profile: vs-2019-release
 
           - name: Windows 2022 Debug
             os: windows-2022
