@@ -11,6 +11,55 @@ class OGREConan(ConanFile):
     generators = "cmake_find_package"
     exports_sources = "patches/**"
 
+    options = {
+        "resourcemanager_strict": ["off", "pedantic", "strict"],
+        "nodeless_positioning": [True, False],
+    }
+
+    default_options = {
+        "resourcemanager_strict": "strict",
+        "nodeless_positioning": False,
+    }
+
+    _cmake = None
+
+    def _configure_cmake(self):
+        if self._cmake:
+            return self._cmake
+        self._cmake = CMake(self)
+
+        self._cmake.definitions["OGRE_BUILD_COMPONENT_BITES"] = "ON"
+        self._cmake.definitions["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
+        self._cmake.definitions["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
+        self._cmake.definitions["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
+        self._cmake.definitions["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
+        self._cmake.definitions["OGRE_BUILD_DEPENDENCIES"] = "OFF"
+        self._cmake.definitions["OGRE_BUILD_PLUGIN_DOT_SCENE"] = "OFF"
+        self._cmake.definitions["OGRE_BUILD_PLUGIN_STBI"] = "ON"
+        self._cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D11"] = "ON"
+        self._cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D9"] = "ON"
+        self._cmake.definitions["OGRE_BUILD_RENDERSYSTEM_GL3PLUS"] = "OFF"
+        self._cmake.definitions["OGRE_BUILD_SAMPLES"] = "OFF"
+        self._cmake.definitions["OGRE_COPY_DEPENDENCIES"] = "OFF"
+        self._cmake.definitions["OGRE_INSTALL_DEPENDENCIES"] = "OFF"
+        self._cmake.definitions["OGRE_INSTALL_SAMPLES"] = "OFF"
+        self._cmake.definitions["OGRE_NODELESS_POSITIONING"] = self.options.nodeless_positioning
+
+        if self.options.resourcemanager_strict == "off":
+            self._cmake.definitions["OGRE_RESOURCEMANAGER_STRICT"] = 0
+        elif self.options.resourcemanager_strict == "pedantic":
+            self._cmake.definitions["OGRE_RESOURCEMANAGER_STRICT"] = 1
+        else:
+            self._cmake.definitions["OGRE_RESOURCEMANAGER_STRICT"] = 2
+
+        if os_info.is_windows:
+            self._cmake.definitions[
+                "CMAKE_CXX_FLAGS"
+            ] = "-D_OGRE_FILESYSTEM_ARCHIVE_UNICODE"
+
+        self._cmake.configure()
+        return self._cmake
+
     def requirements(self):
         for req in self.conan_data["requirements"]:
             self.requires(req)
@@ -32,30 +81,11 @@ class OGREConan(ConanFile):
             tools.patch(**patch)
 
     def build(self):
-        cmake = CMake(self)
-        cmake.definitions["OGRE_BUILD_COMPONENT_BITES"] = "ON"
-        cmake.definitions["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
-        cmake.definitions["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
-        cmake.definitions["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
-        cmake.definitions["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
-        cmake.definitions["OGRE_BUILD_DEPENDENCIES"] = "OFF"
-        cmake.definitions["OGRE_BUILD_PLUGIN_DOT_SCENE"] = "OFF"
-        cmake.definitions["OGRE_BUILD_PLUGIN_STBI"] = "ON"
-        cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D11"] = "ON"
-        cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D9"] = "ON"
-        cmake.definitions["OGRE_BUILD_RENDERSYSTEM_GL3PLUS"] = "OFF"
-        cmake.definitions["OGRE_BUILD_SAMPLES"] = "OFF"
-        cmake.definitions["OGRE_COPY_DEPENDENCIES"] = "OFF"
-        cmake.definitions["OGRE_INSTALL_DEPENDENCIES"] = "OFF"
-        cmake.definitions["OGRE_INSTALL_SAMPLES"] = "OFF"
-        cmake.definitions["OGRE_RESOURCEMANAGER_STRICT"] = 0
-        if os_info.is_windows:
-            cmake.definitions["CMAKE_CXX_FLAGS"] = "-D_OGRE_FILESYSTEM_ARCHIVE_UNICODE"
-        cmake.configure()
+        cmake = self._configure_cmake()
         cmake.build()
 
     def package(self):
-        cmake = CMake(self)
+        cmake = self._configure_cmake()
         cmake.install()
 
     def package_info(self):
