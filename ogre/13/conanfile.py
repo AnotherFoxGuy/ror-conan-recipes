@@ -85,6 +85,11 @@ class OGREConan(ConanFile):
             "find_package(DirectX)",
             "find_package(DirectX9)",
         )
+        tools.replace_in_file(
+            "CMake/Packages/FindDirectX11.cmake",
+            "find_path(DirectX11_INCLUDE_DIR NAMES d3d11.h HINTS \"",
+            "find_path(DirectX11_INCLUDE_DIR NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NAMES d3d11.h HINTS \"",
+        )
         for patch in self.conan_data["patches"][self.version]:
             tools.patch(**patch)
 
