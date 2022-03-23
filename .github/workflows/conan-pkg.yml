@@ -50,14 +50,6 @@ jobs:
         if: startsWith(matrix.config.os, 'ubuntu')
         run: conan profile update settings.compiler.libcxx=libstdc++11 default
 
-      - name: Install DX9 SDK
-        if: startsWith(matrix.config.os, 'windows')
-        shell: cmake -P {0}
-        run: |
-          file(MAKE_DIRECTORY $ENV{DXSDK_DIR})
-          file(DOWNLOAD https://cdn.anotherfoxguy.com/DirectX-SDK.zip "$ENV{TMP}/DirectX.zip" SHOW_PROGRESS)
-          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf "$ENV{TMP}/DirectX.zip" WORKING_DIRECTORY "$ENV{DXSDK_DIR}")
-
       - name: Enable Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1.10.0
 
