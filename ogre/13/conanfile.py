@@ -64,6 +64,9 @@ class OGREConan(ConanFile):
         for req in self.conan_data["requirements"]:
             self.requires(req)
 
+        if os_info.is_windows:
+            self.requires('directx-sdk/9.0@anotherfoxguy/stable')
+
     def system_requirements(self):
         if os_info.is_linux:
             if os_info.with_apt:
@@ -77,6 +80,8 @@ class OGREConan(ConanFile):
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version], strip_root=True)
+        tools.replace_in_file("CMake/Dependencies.cmake",
+                              "find_package(DirectX)", "find_package(DirectX9)")
         for patch in self.conan_data["patches"][self.version]:
             tools.patch(**patch)
 
