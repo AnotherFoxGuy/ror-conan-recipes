@@ -12,11 +12,11 @@ class GcConan(ConanFile):
         tools.get(**self.conan_data["sources"][self.version])
 
     def package(self):
-        self.copy("*.h", src="Include", dst="include")
+        self.copy("*", src="Include", dst="include")
         if self.settings.arch.__contains__("64"):
-            self.copy("*.lib", src="Lib/x64", dst="lib", keep_path=False)
+            self.copy("*", src="Lib/x64", dst="lib", keep_path=False)
         else:
-            self.copy("*.lib", src="lib/x86", dst="lib", keep_path=False)
+            self.copy("*", src="lib/x86", dst="lib", keep_path=False)
 
     def package_info(self):
         self.cpp_info.name = "DirectX9"
