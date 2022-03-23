@@ -11,7 +11,7 @@ class CaelumConan(ConanFile):
     exports_sources = "patches/**"
 
     def requirements(self):
-        for req in self.conan_data["requirements"]:
+        for req in self.conan_data["requirements"][self.version]:
             self.requires(req)
 
     def source(self):

@@ -11,4 +11,7 @@ patches:
   "0.6.4":
     - patch_file: "patches/0.6.4/CMakeLists.txt.patch" 
 requirements:
-  - "ogre3d/[1.x]@anotherfoxguy/stable"
+  "0.6.3":
+    - "ogre3d/[1.x]@anotherfoxguy/stable"
+  "0.6.4":
+    - "ogre3d/[13.x]@anotherfoxguy/stable"
