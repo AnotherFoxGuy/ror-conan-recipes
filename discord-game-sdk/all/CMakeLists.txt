@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB_RECURSE src_files CONFIGURE_DEPENDS "src/cpp/*.cpp" "src/cpp/*.h")
 
-add_library(${PROJECT_NAME} ${src_files})
+add_library(${PROJECT_NAME} STATIC ${src_files})
 
 target_include_directories(${PROJECT_NAME} PRIVATE "src/cpp/")
 
