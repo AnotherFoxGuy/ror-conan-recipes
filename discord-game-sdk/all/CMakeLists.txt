@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.1.2)
-project(discord_game_sdk_core)
+
+if (WIN32)
+        project(discord_game_sdk_core)
+else()
+        project(discord_game_sdk)
+endif()
 
 include(conanbuildinfo.cmake)
 conan_basic_setup()
