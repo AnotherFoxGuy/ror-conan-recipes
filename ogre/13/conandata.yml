@@ -14,6 +14,9 @@ sources:
   "13.4.1":
     url: "https://github.com/OGRECave/ogre/archive/refs/tags/v13.4.1.tar.gz"
     sha256: "23a2e7f0e0bb5236e126a2578c6407535b3f2689ecde1029d5f88e51cc419524"
+  "13.4.2":
+    url: "https://github.com/OGRECave/ogre/archive/refs/tags/v13.4.2.tar.gz"
+    sha256: "df5fe86d3fe5ae70c022f791567ca7476e69ffa20123774b37f2b04b605ab102"
 patches:
   "13.2.4":
     - patch_file: "patches/13.2.4/CMakeLists.txt.patch"
@@ -32,6 +35,10 @@ patches:
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
   "13.4.1":
+    - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
+    - patch_file: "patches/13.3.1/pugixml-fix.patch"
+    - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
+  "13.4.2":
     - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
