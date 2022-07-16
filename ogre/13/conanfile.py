@@ -1,3 +1,4 @@
+import shutil
 from conans import ConanFile, CMake, tools
 from conans.tools import os_info, SystemPackageTool
 
@@ -36,6 +37,7 @@ class OGREConan(ConanFile):
         self._cmake.definitions["OGRE_BUILD_DEPENDENCIES"] = "OFF"
         self._cmake.definitions["OGRE_BUILD_PLUGIN_DOT_SCENE"] = "OFF"
         self._cmake.definitions["OGRE_BUILD_PLUGIN_STBI"] = "ON"
+        self._cmake.definitions["OGRE_BUILD_PLUGIN_EXRCODEC"] = "OFF"
         self._cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D11"] = "ON"
         self._cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D9"] = "ON"
         self._cmake.definitions["OGRE_BUILD_RENDERSYSTEM_GL3PLUS"] = "OFF"
@@ -43,7 +45,9 @@ class OGREConan(ConanFile):
         self._cmake.definitions["OGRE_COPY_DEPENDENCIES"] = "OFF"
         self._cmake.definitions["OGRE_INSTALL_DEPENDENCIES"] = "OFF"
         self._cmake.definitions["OGRE_INSTALL_SAMPLES"] = "OFF"
-        self._cmake.definitions["OGRE_NODELESS_POSITIONING"] = self.options.nodeless_positioning
+        self._cmake.definitions[
+            "OGRE_NODELESS_POSITIONING"
+        ] = self.options.nodeless_positioning
 
         if self.options.resourcemanager_strict == "off":
             self._cmake.definitions["OGRE_RESOURCEMANAGER_STRICT"] = 0
@@ -86,9 +90,17 @@ class OGREConan(ConanFile):
             "find_package(DirectX9)",
         )
         tools.replace_in_file(
+            "CMake/Dependencies.cmake",
+            "find_package(FreeImage)",
+            "find_package(ConanFreeImage)",
+        )
+        tools.replace_in_file(
             "CMake/Packages/FindDirectX11.cmake",
-            "find_path(DirectX11_INCLUDE_DIR NAMES d3d11.h HINTS \"",
-            "find_path(DirectX11_INCLUDE_DIR NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NAMES d3d11.h HINTS \"",
+            'find_path(DirectX11_INCLUDE_DIR NAMES d3d11.h HINTS "',
+            'find_path(DirectX11_INCLUDE_DIR NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NAMES d3d11.h HINTS "',
+        )
+        shutil.copyfile(
+            "patches/FindFreeImage.cmake", "CMake/Packages/FindConanFreeImage.cmake"
         )
         for patch in self.conan_data["patches"][self.version]:
             tools.patch(**patch)

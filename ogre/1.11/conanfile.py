@@ -1,3 +1,4 @@
+import shutil
 from conans import ConanFile, CMake, tools
 from conans.tools import os_info, SystemPackageTool
 
@@ -37,10 +38,16 @@ class OGREConan(ConanFile):
             "find_package(DirectX9)",
         )
         tools.replace_in_file(
-            "CMake/Packages/FindDirectX11.cmake",
-            "find_path(DirectX11_INCLUDE_DIR NAMES d3d11.h HINTS \"",
-            "find_path(DirectX11_INCLUDE_DIR NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NAMES d3d11.h HINTS \"",
+            "CMake/Dependencies.cmake",
+            "find_package(FreeImage)",
+            "find_package(ConanFreeImage)",
         )
+        tools.replace_in_file(
+            "CMake/Packages/FindDirectX11.cmake",
+            'find_path(DirectX11_INCLUDE_DIR NAMES d3d11.h HINTS "',
+            'find_path(DirectX11_INCLUDE_DIR NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NAMES d3d11.h HINTS "',
+        )
+        shutil.copyfile("patches/FindFreeImage.cmake", "CMake/Packages/FindConanFreeImage.cmake")
         for patch in self.conan_data["patches"][self.version]:
             tools.patch(**patch)
 
@@ -53,6 +60,7 @@ class OGREConan(ConanFile):
         cmake.definitions["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
         cmake.definitions["OGRE_BUILD_DEPENDENCIES"] = "OFF"
         cmake.definitions["OGRE_BUILD_PLUGIN_STBI"] = "ON"
+        cmake.definitions["OGRE_BUILD_PLUGIN_EXRCODEC"] = "OFF"
         cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D11"] = "ON"
         cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D9"] = "ON"
         cmake.definitions["OGRE_BUILD_RENDERSYSTEM_GL3PLUS"] = "OFF"
