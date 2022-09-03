@@ -43,11 +43,19 @@ class OGREConan(ConanFile):
             "find_package(ConanFreeImage)",
         )
         tools.replace_in_file(
+            "CMake/Dependencies.cmake",
+            "find_package(ZZip)",
+            "find_package(ConanZZip)",
+        )
+        tools.replace_in_file(
             "CMake/Packages/FindDirectX11.cmake",
             'find_path(DirectX11_INCLUDE_DIR NAMES d3d11.h HINTS "',
             'find_path(DirectX11_INCLUDE_DIR NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NAMES d3d11.h HINTS "',
         )
-        shutil.copyfile("patches/FindFreeImage.cmake", "CMake/Packages/FindConanFreeImage.cmake")
+        shutil.copyfile(
+            "patches/FindFreeImage.cmake", "CMake/Packages/FindConanFreeImage.cmake"
+        )
+        shutil.copyfile("patches/FindZZip.cmake", "CMake/Packages/FindConanZZip.cmake")
         for patch in self.conan_data["patches"][self.version]:
             tools.patch(**patch)
 

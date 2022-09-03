@@ -2,3 +2,4 @@ build/
 tmp/
 upload.*
 .idea/
+build_tmp.py
