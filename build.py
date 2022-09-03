@@ -39,4 +39,4 @@ data = list(filter(lambda k: 'anotherfoxguy' in k, subprocess.run(
     ['conan', 'search', '*', '--raw'], stdout=subprocess.PIPE).stdout.decode("utf-8").split()))
 
 for d in data:
-    system(f"conan upload {d} -r ror-v2 --all --force")
+    system(f"conan upload {d} -r conan-afg --all --force")
