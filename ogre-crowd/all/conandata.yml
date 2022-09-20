@@ -1,0 +1,8 @@
+sources:
+  "2022.09":
+    url: "https://github.com/AnotherFoxGuy/OgreCrowd/archive/58225354881087d5eb84eb83ade87a830adb1f92.zip"
+    sha256: "91ae8a9931788fb552767d8ccc785d5dc1de2d4052ef032a820466f806c19382"
+requirements:
+  - "ogre3d/[1.x]@anotherfoxguy/stable"
+  - "recastnavigation/cci.20200511"
+  - "ois/1.4@rigsofrods/custom"
