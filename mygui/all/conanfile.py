@@ -42,7 +42,7 @@ class MyGUIConan(ConanFile):
     def package_info(self):
         self.cpp_info.includedirs = ['include/MYGUI']
         # Directories where libraries can be found
-        self.cpp_info.libdirs = ['lib', 'lib/release', 'lib/debug']
+        self.cpp_info.libdirs = ['lib', f'lib/{self.settings.build_type}']
         self.cpp_info.libs = tools.collect_libs(self)
 
     def package_id(self):
