@@ -51,7 +51,7 @@ jobs:
         run: conan profile update settings.compiler.libcxx=libstdc++11 default
 
       - name: Enable Developer Command Prompt
-        uses: ilammy/msvc-dev-cmd@v1.10.0
+        uses: ilammy/msvc-dev-cmd@v1.11.0
 
       - name: Run
         env:
