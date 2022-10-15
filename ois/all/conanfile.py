@@ -1,5 +1,7 @@
-from conans import ConanFile, CMake, tools
-from conans.tools import os_info, SystemPackageTool
+from conan import ConanFile
+from conan.tools.files import get, collect_libs
+from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
+from conan.tools.system import package_manager
 
 
 class OisConan(ConanFile):
@@ -11,18 +13,22 @@ class OisConan(ConanFile):
     topics = ("Input", "System")
     settings = "os", "compiler", "build_type", "arch"
 
+    def layout(self):
+        cmake_layout(self)
+
     def system_requirements(self):
-        if os_info.is_linux:
-            if os_info.with_apt:
-                installer = SystemPackageTool()
-                installer.install("libx11-dev")
+        package_manager.Apt(self).install(["libx11-dev"])
 
     def source(self):
-        tools.get(**self.conan_data["sources"][self.version], strip_root=True)
+        get(self, **self.conan_data["sources"][self.version], strip_root=True)
+
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.variables["OIS_BUILD_DEMOS"] = "OFF"
+        tc.generate()
 
     def build(self):
         cmake = CMake(self)
-        cmake.definitions['OIS_BUILD_DEMOS'] = 'OFF'
         cmake.configure()
         cmake.build()
 
@@ -32,4 +38,4 @@ class OisConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.includedirs = ['include', 'include/ois']
-        self.cpp_info.libs = tools.collect_libs(self)
+        self.cpp_info.libs = collect_libs(self)
