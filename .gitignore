@@ -3,3 +3,4 @@ tmp/
 upload.*
 .idea/
 build_tmp.py
+__pycache__

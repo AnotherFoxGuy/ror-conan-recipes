@@ -1,5 +1,6 @@
-from conans import ConanFile, CMake, tools
-
+from conan import ConanFile
+from conan.tools.files import get, collect_libs
+from conan.tools.cmake import CMakeToolchain, CMake, CMakeDeps, cmake_layout
 
 class SocketwConan(ConanFile):
     name = "socketw"
@@ -7,14 +8,22 @@ class SocketwConan(ConanFile):
     url = "https://github.com/RigsOfRods/socketw/issues"
     description = "SocketW is a library which provides cross-platform socket abstraction"
     settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake"
+
+    def layout(self):
+        cmake_layout(self)
 
     def requirements(self):
         for req in self.conan_data["requirements"]:
             self.requires(req)
 
     def source(self):
-        tools.get(**self.conan_data["sources"][self.version], strip_root=True)
+        get(self, **self.conan_data["sources"][self.version], strip_root=True)
+
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.generate()
+        deps = CMakeDeps(self)
+        deps.generate()
 
     def build(self):
         cmake = CMake(self)
@@ -26,4 +35,4 @@ class SocketwConan(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = tools.collect_libs(self)
+        self.cpp_info.libs = collect_libs(self)
