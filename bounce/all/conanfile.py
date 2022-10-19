@@ -1,6 +1,5 @@
 from conan import ConanFile
 from conan.tools.microsoft import (
-    MSBuildDeps,
     MSBuildToolchain,
     MSBuild,
     VCVars,
@@ -11,7 +10,7 @@ from conan.tools.files import (
     copy,
     chdir,
 )
-from conan.tools.gnu import Autotools
+from conan.tools.gnu import Autotools, AutotoolsToolchain
 from conan.tools.layout import basic_layout
 import os
 
@@ -65,6 +64,13 @@ class BounceConan(ConanFile):
             tc = VCVars(self)
             tc.generate()
 
+        else:
+            config = "debug" if self.settings.build_type == "Debug" else "release"
+            config += "_x86_64"
+            tc = AutotoolsToolchain(self)
+            tc.make_args = [f"config={config}" ]
+            tc.generate()
+
     def build(self):
         # Build using premake
         gen = self._generator()
@@ -78,27 +84,36 @@ class BounceConan(ConanFile):
                 msbuild.platform = self._winarch()
                 msbuild.build(f"build/{gen}/bounce.sln", targets=["bounce"])
             else:
-                config = "debug" if self.settings.build_type == "Debug" else "release"
-                config += "_x64"
-                autotools = Autotools(self)
-                autotools.make(args=["config=%s" % config])
+                with chdir(self, os.path.join(self.source_folder, "build/gmake2")):
+                    autotools = Autotools(self)
+                    autotools.make(target="bounce")
 
     def package(self):
         bt = str(self.settings.build_type).lower()
-        copy(
-            self,
-            pattern="*.lib",
-            dst=os.path.join(self.package_folder, "lib"),
-            src=os.path.join(  # build\vs2019\bin\x86\release\bounce\bounce.lib
-                self.source_folder, "build", self._generator(), "bin", self._winarch(), bt, "bounce",
-            ),
-        )
         copy(
             self,
             pattern="*.h",
             dst=os.path.join(self.package_folder, "include"),
             src=os.path.join(self.source_folder, "include"),
         )
+        if self.settings.compiler == "Visual Studio":
+            copy(
+                self,
+                pattern="*.lib",
+                dst=os.path.join(self.package_folder, "lib"),
+                src=os.path.join(  # build\vs2019\bin\x86\release\bounce\bounce.lib
+                    self.source_folder, "build", self._generator(), "bin", self._winarch(), bt, "bounce",
+                ),
+            )
+        else:
+            copy(
+                self,
+                pattern="*.a",
+                dst=os.path.join(self.package_folder, "lib"),
+                src=os.path.join(  # build/gmake2/bin/x86_64/release/bounce/libbounce.a
+                    self.source_folder, "build/gmake2/bin/x86_64", bt, "bounce",
+                ),
+            )
 
     def package_info(self):
         self.cpp_info.libs = collect_libs(self)
