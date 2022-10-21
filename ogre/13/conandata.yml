@@ -25,41 +25,26 @@ sources:
     sha256: "7cf05dbb3acbfc9326daecb60429a8ae9ce7625fb425e6a29de00cf77454596f"
 patches:
   "13.2.4":
-    - patch_file: "patches/13.2.4/CMakeLists.txt.patch"
     - patch_file: "patches/13.2.4/pugixml-fix.patch"
     - patch_file: "patches/13.2.4/FindPkgMacros.cmake.patch"
   "13.3.1":
-    - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
   "13.3.2":
-    - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
   "13.3.3":
-    - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
   "13.4.1":
-    - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
   "13.4.2":
-    - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
   "13.4.3":
-    - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
   "13.4.4":
-    - patch_file: "patches/13.3.1/CMakeLists.txt.patch"
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
-requirements:
-  - "zlib/[1.x]"
-  - "zziplib/[0.13.x]"
-  - "freetype/[2.x]"
-  - "freeimage/[3.x]"
-  - "cg-toolkit/3.1@anotherfoxguy/stable"
-  - "pugixml/[1.x]"
