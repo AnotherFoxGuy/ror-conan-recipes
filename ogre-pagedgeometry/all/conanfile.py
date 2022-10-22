@@ -1,4 +1,6 @@
-from conans import ConanFile, CMake, tools
+from conan import ConanFile
+from conan.tools.files import get, collect_libs
+from conan.tools.cmake import CMakeToolchain, CMake, CMakeDeps, cmake_layout
 
 
 class PagedGeometryConan(ConanFile):
@@ -7,17 +9,22 @@ class PagedGeometryConan(ConanFile):
     url = "https://github.com/RigsOfRods/Caelum/issues"
     description = "PagedGeometry is a plugin for OGRE for rendering of dense vegetation "
     settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake_find_package"
-    exports_sources = "patches/**"
+
+    def layout(self):
+        cmake_layout(self)
 
     def requirements(self):
-        for req in self.conan_data["requirements"][self.version]:
-            self.requires(req)
+        self.requires("ogre3d/[13.x]@anotherfoxguy/stable")
+        self.requires("libpng/1.6.38")
 
     def source(self):
-        tools.get(**self.conan_data["sources"][self.version], strip_root=True)
-        for patch in self.conan_data["patches"][self.version]:
-            tools.patch(**patch)
+        get(self, **self.conan_data["sources"][self.version], strip_root=True)
+
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.generate()
+        deps = CMakeDeps(self)
+        deps.generate()
 
     def build(self):
         cmake = CMake(self)
@@ -34,7 +41,7 @@ class PagedGeometryConan(ConanFile):
             'include',
             'include/PagedGeometry'
         ]
-        self.cpp_info.libs = tools.collect_libs(self)
+        self.cpp_info.libs = collect_libs(self)
 
     def package_id(self):
         self.info.requires["ogre3d"].full_recipe_mode()
