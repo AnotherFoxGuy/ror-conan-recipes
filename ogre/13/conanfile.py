@@ -113,12 +113,14 @@ class OGREConan(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.name = "OGRE"
+        self.cpp_info.set_property("cmake_module_file_name", "OGRE")
+        self.cpp_info.set_property("cmake_module_target_name", "OGRE::OGRE")
+        self.cpp_info.set_property("cmake_file_name", "OGRE")
+        self.cpp_info.set_property("cmake_target_name", "OGRE::OGRE")
         self.cpp_info.includedirs = [
             "include",
             "include/OGRE",
             "include/OGRE/Bites",
-            "include/OGRE/HLMS",
             "include/OGRE/MeshLodGenerator",
             "include/OGRE/Overlay",
             "include/OGRE/Paging",
