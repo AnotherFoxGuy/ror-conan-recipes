@@ -36,7 +36,10 @@ class PagedGeometryConan(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.name = "PagedGeometry"
+        self.cpp_info.set_property("cmake_module_file_name", "PagedGeometry")
+        self.cpp_info.set_property("cmake_module_target_name", "PagedGeometry::PagedGeometry")
+        self.cpp_info.set_property("cmake_file_name", "PagedGeometry")
+        self.cpp_info.set_property("cmake_target_name", "PagedGeometry::PagedGeometry")
         self.cpp_info.includedirs = [
             'include',
             'include/PagedGeometry'
