@@ -1,23 +1,23 @@
-from conans import ConanFile, tools
-from conans.tools import os_info
+from conan import ConanFile
+from conan.tools.files import get, copy
+import os
 
-
-class GcConan(ConanFile):
+class DxConan(ConanFile):
     name = "directx-sdk"
     version = "9.0"
     author = "Edgar Edgar@AnotherFoxGuy.com"
     settings = "os", "arch"
 
     def source(self):
-        tools.get(**self.conan_data["sources"][self.version])
+        get(self, **self.conan_data["sources"][self.version])
 
     def package(self):
-        self.copy("*", src="Include", dst="include")
-        if self.settings.arch.__contains__("64"):
-            self.copy("*", src="Lib/x64", dst="lib", keep_path=False)
+        copy(self, "*", os.path.join(self.source_folder, "Include"), os.path.join(self.package_folder, "include"))
+        if '64' in self.settings.arch:
+            copy(self, "*", os.path.join(self.source_folder, "Lib/x64"), os.path.join(self.package_folder, "lib"), keep_path=False)
         else:
-            self.copy("*", src="lib/x86", dst="lib", keep_path=False)
+            copy(self, "*", os.path.join(self.source_folder, "lib/x86"), os.path.join(self.package_folder, "lib"), keep_path=False)
 
     def package_info(self):
-        self.cpp_info.name = "DirectX9"
+        self.cpp_info.set_property("cmake_file_name", "DirectX9")
         self.cpp_info.libs = ["d3d9", "d3dx9", "dxguid"]
