@@ -1,5 +1,5 @@
 from conan import ConanFile
-from conan.tools.files import get, collect_libs,copy, replace_in_file, apply_conandata_patches, export_conandata_patches
+from conan.tools.files import get, collect_libs, rmdir, replace_in_file, apply_conandata_patches, export_conandata_patches
 from conan.tools.cmake import CMakeToolchain, CMake, CMakeDeps, cmake_layout
 from conan.tools.system.package_manager import Apt
 import os
@@ -87,17 +87,22 @@ class OGREConan(ConanFile):
     def _patch_sources(self):
         apply_conandata_patches(self)
         replace_in_file(self,
-            os.path.join(self.source_folder,"CMake/Dependencies.cmake"),
+            os.path.join(self.source_folder, "CMake/Dependencies.cmake"),
             "find_package(DirectX)",
             "find_package(DirectX9)",
         )
         replace_in_file(self,
-            os.path.join(self.source_folder,"PlugIns/FreeImageCodec/CMakeLists.txt"),
+            os.path.join(self.source_folder, "PlugIns/FreeImageCodec/CMakeLists.txt"),
             "${FreeImage_LIBRARIES}",
             "freeimage::FreeImage",
         )
         replace_in_file(self,
-            os.path.join(self.source_folder,"CMake/Packages/FindDirectX11.cmake"),
+            os.path.join(self.source_folder, "Components/Overlay/CMakeLists.txt"),
+            "${FREETYPE_LIBRARIES}",
+            "freetype",
+        )
+        replace_in_file(self,
+            os.path.join(self.source_folder, "CMake/Packages/FindDirectX11.cmake"),
             'find_path(DirectX11_INCLUDE_DIR NAMES d3d11.h HINTS "',
             'find_path(DirectX11_INCLUDE_DIR NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NAMES d3d11.h HINTS "',
         )
@@ -111,6 +116,8 @@ class OGREConan(ConanFile):
     def package(self):
         cmake = CMake(self)
         cmake.install()
+        rmdir(self, os.path.join(self.package_folder, "CMake"))
+        rmdir(self, os.path.join(self.package_folder, "Docs"))
 
     def package_info(self):
         self.cpp_info.set_property("cmake_module_file_name", "OGRE")
