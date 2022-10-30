@@ -14,7 +14,7 @@ class CaelumConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        self.requires("ogre3d/[13.x]@test/test")
+        self.requires("ogre3d/[13.x]@anotherfoxguy/stable")
         self.requires("libpng/1.6.38")
 
     def source(self):
