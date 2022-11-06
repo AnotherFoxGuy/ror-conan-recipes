@@ -35,6 +35,7 @@ class OGREConan(ConanFile):
         self.requires("cg-toolkit/3.1@anotherfoxguy/stable")
         self.requires("pugixml/[1.x]")
         self.requires("libpng/1.6.38")
+        self.requires("sdl/[2.x]")
         if self.settings.os == "Windows":
             self.requires("directx-sdk/9.0@anotherfoxguy/stable")
 
