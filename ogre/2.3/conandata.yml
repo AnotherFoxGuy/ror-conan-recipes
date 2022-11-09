@@ -1,7 +1,4 @@
 sources:
-  "2.3.1":
-    url: "https://github.com/OGRECave/ogre-next/archive/refs/tags/v2.3.1.tar.gz"
-    sha256: "38dd0d5ba5759ee47c71552c5dacf44dad5fe61868025dcbd5ea6a6bdb6bc8e4"
-patches:
-  "2.3.1":
-    - patch_file: "patches/2.3.1/RapidJSON-fix.patch"
+  "2022.10":
+    url: "https://github.com/OGRECave/ogre-next/archive/ede1690bb3dcf932df6a06f06e9e6de585e5eeea.tar.gz"
+    sha256: "6baf05cc4dc14cb70b6f4a958dbc7ac79a209eb9658733d0b19f651a5f96da08"

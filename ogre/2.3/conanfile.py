@@ -42,12 +42,13 @@ class OGRENextConan(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
+        tc.variables["OGRE_BUILD_COMPONENT_ATMOSPHERE"] = "ON"
         tc.variables["OGRE_BUILD_COMPONENT_BITES"] = "ON"
         tc.variables["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
         tc.variables["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
         tc.variables["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
         tc.variables["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
-        tc.variables["OGRE_BUILD_COMPONENT_TERRAIN"] = "OFF"# This is borked
+        tc.variables["OGRE_BUILD_COMPONENT_TERRAIN"] = "ON"
         tc.variables["OGRE_BUILD_DEPENDENCIES"] = "OFF"
         tc.variables["OGRE_BUILD_PLUGIN_DOT_SCENE"] = "OFF"
         tc.variables["OGRE_BUILD_PLUGIN_EXRCODEC"] = "OFF"
@@ -71,7 +72,6 @@ class OGRENextConan(ConanFile):
             """
             find_package(RapidJSON)
             set(Rapidjson_FOUND TRUE)
-            add_library(RapidJSON::RapidJSON ALIAS rapidjson)
             """,
         )
         replace_in_file(self,
@@ -83,6 +83,11 @@ class OGRENextConan(ConanFile):
             os.path.join(self.source_folder, "CMake/InstallDependencies.cmake"),
             "# Install dependencies",
             "return()",
+        )
+        replace_in_file(self,
+            os.path.join(self.source_folder, "OgreMain/CMakeLists.txt"),
+            "target_link_libraries(${OGRE_NEXT}Main ${LIBRARIES})",
+            "target_link_libraries(${OGRE_NEXT}Main ${LIBRARIES} rapidjson freeimage::FreeImage)",
         )
 
 
@@ -106,17 +111,28 @@ class OGRENextConan(ConanFile):
         self.cpp_info.includedirs = [
             "include",
             "include/OGRE",
+            "include/OGRE/Animation",
+            "include/OGRE/Atmosphere",
             "include/OGRE/Bites",
+            "include/OGRE/Compositor",
+            "include/OGRE/Deprecated",
             "include/OGRE/HLMS",
+            "include/OGRE/HLMS/Common",
+            "include/OGRE/HLMS/Pbs",
+            "include/OGRE/HLMS/Unlit",
+            "include/OGRE/Math",
             "include/OGRE/MeshLodGenerator",
             "include/OGRE/Overlay",
             "include/OGRE/Paging",
             "include/OGRE/Plugins",
             "include/OGRE/Property",
-            "include/OGRE/RenderSystems",
             "include/OGRE/RTShaderSystem",
+            "include/OGRE/RenderSystems",
             "include/OGRE/Terrain",
+            "include/OGRE/Threading",
             "include/OGRE/Threading",
             "include/OGRE/Volume",
         ]
+        # Directories where libraries can be found
+        self.cpp_info.libdirs = ['lib', f'lib/{self.settings.build_type}']
         self.cpp_info.libs = collect_libs(self)
