@@ -8,6 +8,7 @@ class SocketwConan(ConanFile):
     url = "https://github.com/RigsOfRods/socketw/issues"
     description = "SocketW is a library which provides cross-platform socket abstraction"
     settings = "os", "compiler", "build_type", "arch"
+    exports_sources = "dummy-file-to-fix-cloudsmith"
 
     def layout(self):
         cmake_layout(self)

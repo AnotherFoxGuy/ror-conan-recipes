@@ -9,6 +9,7 @@ class PagedGeometryConan(ConanFile):
     url = "https://github.com/RigsOfRods/Caelum/issues"
     description = "PagedGeometry is a plugin for OGRE for rendering of dense vegetation "
     settings = "os", "compiler", "build_type", "arch"
+    exports_sources = "dummy-file-to-fix-cloudsmith"
 
     def layout(self):
         cmake_layout(self)

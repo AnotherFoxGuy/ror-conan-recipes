@@ -12,6 +12,7 @@ class MyGUIConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"system_ogre": [True, False]}
     default_options = {"system_ogre": False}
+    exports_sources = "dummy-file-to-fix-cloudsmith"
 
     def layout(self):
         cmake_layout(self)

@@ -7,6 +7,7 @@ class DxConan(ConanFile):
     version = "9.0"
     author = "Edgar Edgar@AnotherFoxGuy.com"
     settings = "os", "arch"
+    exports_sources = "dummy-file-to-fix-cloudsmith"
 
     def source(self):
         get(self, **self.conan_data["sources"][self.version])

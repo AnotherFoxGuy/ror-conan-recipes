@@ -12,6 +12,7 @@ class OisConan(ConanFile):
     description = "Object oriented Input System"
     topics = ("Input", "System")
     settings = "os", "compiler", "build_type", "arch"
+    exports_sources = "dummy-file-to-fix-cloudsmith"
 
     def layout(self):
         cmake_layout(self)

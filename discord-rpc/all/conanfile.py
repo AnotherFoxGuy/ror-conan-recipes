@@ -10,6 +10,7 @@ class DiscordrpcConan(ConanFile):
     url = "https://github.com/AnotherFoxGuy/conan-discord-rpc"
     description = "This is a library for interfacing your game with a locally running Discord desktop client. It's known to work on Windows, macOS, and Linux."
     settings = "os", "compiler", "build_type", "arch"
+    exports_sources = "dummy-file-to-fix-cloudsmith"
 
     def layout(self):
         cmake_layout(self)
