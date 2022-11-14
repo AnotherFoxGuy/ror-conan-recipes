@@ -8,3 +8,6 @@ sources:
   "2022.08":
     url: "https://github.com/OGRECave/ogre-caelum/archive/4bd1b0581d55896d37922483981582661ca557de.zip"
     sha256: "deffe26ba169d89954f62ade50e856fdae293078c73836378d7bf3051eff0a8d"
+patches:
+  "2022.08":
+    - patch_file: "patches/2022.08/CMakeLists.txt.patch"

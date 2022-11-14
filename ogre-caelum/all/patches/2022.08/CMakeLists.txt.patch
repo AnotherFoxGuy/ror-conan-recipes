@@ -1,25 +1,8 @@
---- CMakeLists.txt
-+++ CMakeLists.txt
-@@ -8,6 +8,8 @@
+--- a/main/CMakeLists.txt
++++ b/main/CMakeLists.txt
+@@ -34,4 +34,4 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/main/include/ DESTINATION ${CMAKE_INSTALL_
+ install(DIRECTORY ${CMAKE_BINARY_DIR}/main/include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Caelum FILES_MATCHING PATTERN "*.h" PATTERN ".svn" EXCLUDE)
  
- cmake_minimum_required(VERSION 3.0.2)
- 
-+set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})
-+set(CMAKE_DEBUG_POSTFIX _d)
- # define the project
- project(
-         Caelum
-@@ -29,7 +31,12 @@
- 
- SET(CMAKE_USE_RELATIVE_PATHS OFF)
- 
--find_package(OGRE REQUIRED CONFIG)
-+find_package(OGRE REQUIRED)
-+
-+add_library(OgreMain INTERFACE IMPORTED GLOBAL)
-+target_include_directories(OgreMain INTERFACE ${OGRE_INCLUDE_DIRS})
-+target_link_libraries(OgreMain INTERFACE ${OGRE_LIBRARIES})
-+
- 
- # setup paths
- SET(RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/")
+ # --- Ogre 3D graphics engine ---
+-target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC OgreMain)
++target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC OGRE::OGRE)

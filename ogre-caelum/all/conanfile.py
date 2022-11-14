@@ -1,7 +1,13 @@
 from conan import ConanFile
-from conan.tools.files import get, collect_libs, replace_in_file
+from conan.tools.files import (
+    get,
+    collect_libs,
+    apply_conandata_patches,
+    export_conandata_patches,
+)
 from conan.tools.cmake import CMakeToolchain, CMake, CMakeDeps, cmake_layout
 import os
+
 
 class CaelumConan(ConanFile):
     name = "ogre3d-caelum"
@@ -9,6 +15,9 @@ class CaelumConan(ConanFile):
     url = "https://github.com/RigsOfRods/Caelum/issues"
     description = "Library for rendering of dynamic and realistic skies"
     settings = "os", "compiler", "build_type", "arch"
+
+    def export_sources(self):
+        export_conandata_patches(self)
 
     def layout(self):
         cmake_layout(self)
@@ -27,11 +36,7 @@ class CaelumConan(ConanFile):
         deps.generate()
 
     def _patch_sources(self):
-        replace_in_file(self,
-            os.path.join(self.source_folder, "main/CMakeLists.txt"),
-            "OgreMain",
-            "OGRE::OGRE",
-        )
+        apply_conandata_patches(self)
 
     def build(self):
         self._patch_sources()
@@ -48,10 +53,7 @@ class CaelumConan(ConanFile):
         self.cpp_info.set_property("cmake_module_target_name", "Caelum::Caelum")
         self.cpp_info.set_property("cmake_file_name", "Caelum")
         self.cpp_info.set_property("cmake_target_name", "Caelum::Caelum")
-        self.cpp_info.includedirs = [
-            'include',
-            'include/Caelum'
-        ]
+        self.cpp_info.includedirs = ["include", "include/Caelum"]
         self.cpp_info.libs = collect_libs(self)
 
     def package_id(self):
