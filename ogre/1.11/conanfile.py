@@ -1,7 +1,8 @@
-import shutil
-from conans import ConanFile, CMake, tools
-from conans.tools import os_info, SystemPackageTool
-
+from conan import ConanFile
+from conan.tools.files import get, collect_libs, rmdir, replace_in_file, apply_conandata_patches, export_conandata_patches
+from conan.tools.cmake import CMakeToolchain, CMake, CMakeDeps, cmake_layout
+from conan.tools.system.package_manager import Apt
+import os
 
 class OGREConan(ConanFile):
     name = "ogre3d"
@@ -9,88 +10,94 @@ class OGREConan(ConanFile):
     url = "https://github.com/AnotherFoxGuy/conan-OGRE"
     description = "scene-oriented, flexible 3D engine written in C++"
     settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake_paths", "cmake_find_package"
-    exports_sources = "patches/**"
+
+    def export_sources(self):
+        export_conandata_patches(self)
+
+    def layout(self):
+        cmake_layout(self)
 
     def requirements(self):
-        for req in self.conan_data["requirements"]:
-            self.requires(req)
-
-        if os_info.is_windows:
+        self.requires("zlib/[1.x]")
+        self.requires("zziplib/[0.13.x]")
+        self.requires("freetype/[2.x]")
+        self.requires("freeimage/[3.x]")
+        self.requires("cg-toolkit/3.1@anotherfoxguy/stable")
+        self.requires("pugixml/[1.x]")
+        self.requires("libpng/1.6.38")
+        if self.settings.os == "Windows":
             self.requires("directx-sdk/9.0@anotherfoxguy/stable")
 
     def system_requirements(self):
-        if os_info.is_linux:
-            if os_info.with_apt:
-                installer = SystemPackageTool()
-                installer.install("libgles2-mesa-dev")
-                installer.install("libglu1-mesa-dev")
-                installer.install("libx11-dev")
-                installer.install("libxaw7-dev")
-                installer.install("libxrandr-dev")
-                installer.install("libxt-dev")
+        Apt(self).install([
+                "libx11-dev",
+                "libxaw7-dev",
+                "libxrandr-dev",
+                "libgles2-mesa-dev",
+                "libvulkan-dev",
+                "glslang-dev"
+        ], check=True)
 
     def source(self):
-        tools.get(**self.conan_data["sources"][self.version], strip_root=True)
-        tools.replace_in_file(
-            "CMake/Dependencies.cmake",
+        get(self, **self.conan_data["sources"][self.version], strip_root=True)
+
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.variables["OGRE_BUILD_COMPONENT_BITES"] = "ON"
+        tc.variables["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
+        tc.variables["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
+        tc.variables["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
+        tc.variables["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
+        tc.variables["OGRE_BUILD_DEPENDENCIES"] = "OFF"
+        tc.variables["OGRE_BUILD_PLUGIN_STBI"] = "ON"
+        tc.variables["OGRE_BUILD_PLUGIN_EXRCODEC"] = "OFF"
+        tc.variables["OGRE_BUILD_RENDERSYSTEM_D3D11"] = "ON"
+        tc.variables["OGRE_BUILD_RENDERSYSTEM_D3D9"] = "ON"
+        tc.variables["OGRE_BUILD_RENDERSYSTEM_GL3PLUS"] = "OFF"
+        tc.variables["OGRE_BUILD_SAMPLES"] = "OFF"
+        tc.variables["OGRE_INSTALL_SAMPLES"] = "OFF"
+        tc.variables["OGRE_RESOURCEMANAGER_STRICT"] = 0
+
+        if self.settings.os == "Windows":
+            tc.variables["CMAKE_CXX_FLAGS"] = "-D_OGRE_FILESYSTEM_ARCHIVE_UNICODE"
+        tc.generate()
+        deps = CMakeDeps(self)
+        deps.generate()
+
+    def _patch_sources(self):
+        apply_conandata_patches(self)
+        replace_in_file(self,
+            os.path.join(self.source_folder, "CMake/Dependencies.cmake"),
             "find_package(DirectX)",
             "find_package(DirectX9)",
         )
-        tools.replace_in_file(
-            "CMake/Dependencies.cmake",
-            "find_package(FreeImage)",
-            "find_package(ConanFreeImage)",
-        )
-        tools.replace_in_file(
-            "CMake/Dependencies.cmake",
-            "find_package(ZZip)",
-            "find_package(ConanZZip)",
-        )
-        tools.replace_in_file(
-            "CMake/Packages/FindDirectX11.cmake",
+        replace_in_file(self,
+            os.path.join(self.source_folder, "CMake/Packages/FindDirectX11.cmake"),
             'find_path(DirectX11_INCLUDE_DIR NAMES d3d11.h HINTS "',
             'find_path(DirectX11_INCLUDE_DIR NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NAMES d3d11.h HINTS "',
         )
-        shutil.copyfile(
-            "patches/FindFreeImage.cmake", "CMake/Packages/FindConanFreeImage.cmake"
-        )
-        shutil.copyfile("patches/FindZZip.cmake", "CMake/Packages/FindConanZZip.cmake")
-        for patch in self.conan_data["patches"][self.version]:
-            tools.patch(**patch)
 
     def build(self):
+        self._patch_sources()
         cmake = CMake(self)
-        cmake.definitions["OGRE_BUILD_COMPONENT_BITES"] = "ON"
-        cmake.definitions["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
-        cmake.definitions["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
-        cmake.definitions["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
-        cmake.definitions["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
-        cmake.definitions["OGRE_BUILD_DEPENDENCIES"] = "OFF"
-        cmake.definitions["OGRE_BUILD_PLUGIN_STBI"] = "ON"
-        cmake.definitions["OGRE_BUILD_PLUGIN_EXRCODEC"] = "OFF"
-        cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D11"] = "ON"
-        cmake.definitions["OGRE_BUILD_RENDERSYSTEM_D3D9"] = "ON"
-        cmake.definitions["OGRE_BUILD_RENDERSYSTEM_GL3PLUS"] = "OFF"
-        cmake.definitions["OGRE_BUILD_SAMPLES"] = "OFF"
-        cmake.definitions["OGRE_INSTALL_SAMPLES"] = "OFF"
-        cmake.definitions["OGRE_RESOURCEMANAGER_STRICT"] = 0
-        if os_info.is_windows:
-            cmake.definitions["CMAKE_CXX_FLAGS"] = "-D_OGRE_FILESYSTEM_ARCHIVE_UNICODE"
         cmake.configure()
         cmake.build()
 
     def package(self):
         cmake = CMake(self)
         cmake.install()
+        rmdir(self, os.path.join(self.package_folder, "CMake"))
+        rmdir(self, os.path.join(self.package_folder, "Docs"))
 
     def package_info(self):
-        self.cpp_info.name = "OGRE"
+        self.cpp_info.set_property("cmake_module_file_name", "OGRE")
+        self.cpp_info.set_property("cmake_module_target_name", "OGRE::OGRE")
+        self.cpp_info.set_property("cmake_file_name", "OGRE")
+        self.cpp_info.set_property("cmake_target_name", "OGRE::OGRE")
         self.cpp_info.includedirs = [
             "include",
             "include/OGRE",
             "include/OGRE/Bites",
-            "include/OGRE/HLMS",
             "include/OGRE/MeshLodGenerator",
             "include/OGRE/Overlay",
             "include/OGRE/Paging",
@@ -102,4 +109,4 @@ class OGREConan(ConanFile):
             "include/OGRE/Threading",
             "include/OGRE/Volume",
         ]
-        self.cpp_info.libs = tools.collect_libs(self)
+        self.cpp_info.libs = collect_libs(self)
