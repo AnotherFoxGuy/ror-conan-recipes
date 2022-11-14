@@ -2,6 +2,9 @@ sources:
   "0.6.3":
     url: "https://github.com/OGRECave/ogre-caelum/archive/94913d2040a41148c14001c33a0bdc0f100842f8.zip"
     sha256: "9de4159ae8050fd0858b3c1c09005aa50b36079a3a06accfb67203669be9a09e"
+  "0.6.3.1":
+    url: "https://github.com/RigsOfRods/ogre-caelum/archive/70fcf62f306288c9472cc03a42367c9625c839ea.zip"
+    sha256: "b4b4b6fe2997c3da4537ada2ab69032647e65773886e57c9803fc90aac2dd158"
   "0.6.4":
     url: "https://github.com/OGRECave/ogre-caelum/archive/4bd1b0581d55896d37922483981582661ca557de.zip"
     sha256: "deffe26ba169d89954f62ade50e856fdae293078c73836378d7bf3051eff0a8d"
