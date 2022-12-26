@@ -59,6 +59,7 @@ class OGREConan(ConanFile):
         tc.variables["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
         tc.variables["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
         tc.variables["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
+        tc.variables["OGRE_BUILD_COMPONENT_BULLET"] = "OFF"
         tc.variables["OGRE_BUILD_DEPENDENCIES"] = "OFF"
         tc.variables["OGRE_BUILD_PLUGIN_DOT_SCENE"] = "OFF"
         tc.variables["OGRE_BUILD_PLUGIN_STBI"] = "ON"
