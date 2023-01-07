@@ -49,6 +49,7 @@ class OGRENextConan(ConanFile):
         tc.variables["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
         tc.variables["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
         tc.variables["OGRE_BUILD_COMPONENT_TERRAIN"] = "ON"
+        #tc.variables["OGRE_BUILD_COMPONENT_PAGING"] = "ON" # Completly broken
         tc.variables["OGRE_BUILD_DEPENDENCIES"] = "OFF"
         tc.variables["OGRE_BUILD_PLUGIN_DOT_SCENE"] = "OFF"
         tc.variables["OGRE_BUILD_PLUGIN_EXRCODEC"] = "OFF"
@@ -113,25 +114,23 @@ class OGRENextConan(ConanFile):
             "include/OGRE",
             "include/OGRE/Animation",
             "include/OGRE/Atmosphere",
-            "include/OGRE/Bites",
+            "include/OGRE/CommandBuffer",
             "include/OGRE/Compositor",
-            "include/OGRE/Deprecated",
-            "include/OGRE/HLMS",
-            "include/OGRE/HLMS/Common",
-            "include/OGRE/HLMS/Pbs",
-            "include/OGRE/HLMS/Unlit",
+            "include/OGRE/Compute",
+            "include/OGRE/Hash",
+            "include/OGRE/Hlms",
+            "include/OGRE/Hlms/Common",
+            "include/OGRE/Hlms/Pbs",
+            "include/OGRE/Hlms/Unlit",
             "include/OGRE/Math",
             "include/OGRE/MeshLodGenerator",
+            "include/OGRE/ogrestd",
             "include/OGRE/Overlay",
-            "include/OGRE/Paging",
             "include/OGRE/Plugins",
-            "include/OGRE/Property",
-            "include/OGRE/RTShaderSystem",
             "include/OGRE/RenderSystems",
-            "include/OGRE/Terrain",
+            "include/OGRE/SceneFormat",
             "include/OGRE/Threading",
-            "include/OGRE/Threading",
-            "include/OGRE/Volume",
+            "include/OGRE/Vao",
         ]
         # Directories where libraries can be found
         self.cpp_info.libdirs = ['lib', f'lib/{self.settings.build_type}']
