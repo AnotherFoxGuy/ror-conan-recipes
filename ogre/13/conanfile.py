@@ -14,11 +14,13 @@ class OGREConan(ConanFile):
     options = {
         "resourcemanager_strict": ["off", "pedantic", "strict"],
         "nodeless_positioning": [True, False],
+        "codec_rsimage": [True, False],
     }
 
     default_options = {
         "resourcemanager_strict": "strict",
         "nodeless_positioning": False,
+        "codec_rsimage": False,
     }
 
     def export_sources(self):
@@ -71,6 +73,7 @@ class OGREConan(ConanFile):
         tc.variables["OGRE_COPY_DEPENDENCIES"] = "OFF"
         tc.variables["OGRE_INSTALL_DEPENDENCIES"] = "OFF"
         tc.variables["OGRE_INSTALL_SAMPLES"] = "OFF"
+        tc.variables["OGRE_BUILD_PLUGIN_RSIMAGE"] = self.options.codec_rsimage
         tc.variables["OGRE_NODELESS_POSITIONING"] = self.options.nodeless_positioning
 
         if self.options.resourcemanager_strict == "off":
