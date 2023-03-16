@@ -1,6 +1,6 @@
 from conan import ConanFile
-from conan.tools.files import get, collect_libs
-from conans.client.tools.oss import OSInfo
+from conan.tools.files import get, collect_libs, copy
+import os
 
 class GcConan(ConanFile):
     name = "cg-toolkit"
@@ -12,21 +12,23 @@ class GcConan(ConanFile):
         get(self, **self.conan_data["sources"][self.version], strip_root=True)
 
     def package(self):
-        self.copy("*.h", src="include", dst="include")
-        os_info = OSInfo()
-        if os_info.is_linux:
+        copy(self, "*.h", os.path.join(self.source_folder, "include"), os.path.join(self.package_folder,"include"))
+        if self.settings.os == "Windows":
             if '64' in self.settings.arch:
-                self.copy("*.so", src="lib64", dst="lib", keep_path=False)
+                #copy(self, "*.h", self.source_folder, os.path.join(self.package_folder, "include"))
+                copy(self, "*.lib", os.path.join(self.source_folder, "lib64"), os.path.join(self.package_folder,"lib"))
+                copy(self, "*.dll", os.path.join(self.source_folder, "bin64"), os.path.join(self.package_folder,"bin"))
             else:
-                self.copy("*.so", src="lib", dst="lib", keep_path=False)
+                copy(self, "*.lib", os.path.join(self.source_folder, "lib"), os.path.join(self.package_folder,"lib"))
+                copy(self, "*.dll", os.path.join(self.source_folder, "bin"), os.path.join(self.package_folder,"bin"))
         else:
             if '64' in self.settings.arch:
-                self.copy("*.lib", src="lib64", dst="lib", keep_path=False)
-                self.copy("*.dll", src="bin64", dst="bin", keep_path=False)
+                copy(self, "*.so", os.path.join(self.source_folder, "lib64"), os.path.join(self.package_folder,"lib"))
             else:
-                self.copy("*.lib", src="lib", dst="lib", keep_path=False)
-                self.copy("*.dll", src="bin", dst="bin", keep_path=False)
-
+                copy(self, "*.so", os.path.join(self.source_folder, "lib"), os.path.join(self.package_folder,"lib"))
     def package_info(self):
-        self.cpp_info.name = "Cg"
+        self.cpp_info.set_property("cmake_module_file_name", "Cg")
+        self.cpp_info.set_property("cmake_module_target_name", "Cg::Cg")
+        self.cpp_info.set_property("cmake_file_name", "Cg")
+        self.cpp_info.set_property("cmake_target_name", "Cg::Cg")
         self.cpp_info.libs = collect_libs(self)

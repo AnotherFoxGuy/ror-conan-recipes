@@ -18,7 +18,7 @@ class MyGUIConan(ConanFile):
 
     def requirements(self):
         if not self.options.system_ogre:
-            self.requires("ogre3d/[13.x]@anotherfoxguy/stable")
+            self.requires("ogre3d/[>=1 <14]@anotherfoxguy/stable")
 
     def source(self):
         get(self, **self.conan_data["sources"][self.version], strip_root=True)
