@@ -31,6 +31,7 @@ class CaelumConan(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
+        tc.variables["CMAKE_DEBUG_POSTFIX"] = "d"
         tc.generate()
         deps = CMakeDeps(self)
         deps.generate()
