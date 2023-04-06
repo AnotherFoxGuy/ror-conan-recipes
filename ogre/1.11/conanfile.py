@@ -33,6 +33,7 @@ class OGREConan(ConanFile):
                 "libxaw7-dev",
                 "libxrandr-dev",
                 "libgles2-mesa-dev",
+                "libglu1-mesa-dev",
                 "libvulkan-dev",
                 "glslang-dev"
         ], check=True)
