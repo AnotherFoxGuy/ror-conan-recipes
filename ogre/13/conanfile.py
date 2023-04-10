@@ -30,14 +30,12 @@ class OGREConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        self.requires("zlib/[1.x]")
-        self.requires("zziplib/[0.13.x]")
-        self.requires("freetype/[2.x]")
-        self.requires("freeimage/[3.x]")
+        self.requires("zlib/[~1]")
+        self.requires("freetype/[~2]")
+        self.requires("freeimage/[~3]")
         self.requires("cg-toolkit/3.1@anotherfoxguy/stable")
-        self.requires("pugixml/[1.x]")
-        self.requires("libpng/1.6.38")
-        self.requires("sdl/[2.x]")
+        self.requires("pugixml/[~1]")
+        self.requires("sdl/[~2]")
         if self.settings.os == "Windows":
             self.requires("directx-sdk/9.0@anotherfoxguy/stable")
 
@@ -47,6 +45,7 @@ class OGREConan(ConanFile):
                 "libxaw7-dev",
                 "libxrandr-dev",
                 "libgles2-mesa-dev",
+                "libglu1-mesa-dev",
                 "libvulkan-dev",
                 "glslang-dev"
         ], check=True)
