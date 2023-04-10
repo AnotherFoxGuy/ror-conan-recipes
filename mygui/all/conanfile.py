@@ -71,5 +71,5 @@ class MyGUIConan(ConanFile):
         self.cpp_info.libs = collect_libs(self)
 
     def package_id(self):
-        if not self.options.system_ogre:
+        if not self.info.options.system_ogre:
             self.info.requires["ogre3d"].full_recipe_mode()
