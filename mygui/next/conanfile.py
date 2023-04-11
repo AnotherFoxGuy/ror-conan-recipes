@@ -48,6 +48,11 @@ class MyGUIConan(ConanFile):
             "freetype",
         )
         replace_in_file(self,
+            os.path.join(self.source_folder, "MyGUIEngine/CMakeLists.txt"),
+            "use_precompiled_header(${PROJECTNAME}",
+            "target_precompile_headers(${PROJECTNAME} PRIVATE",
+        )
+        replace_in_file(self,
             os.path.join(self.source_folder, "CMakeLists.txt"),
             "# Find dependencies",
             "find_package(OGRE REQUIRED)",
@@ -79,5 +84,5 @@ class MyGUIConan(ConanFile):
         self.cpp_info.libs = collect_libs(self)
 
     def package_id(self):
-        if not self.options.system_ogre:
+        if not self.info.options.system_ogre:
             self.info.requires["ogre3d-next"].full_recipe_mode()
