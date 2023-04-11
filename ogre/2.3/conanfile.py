@@ -18,14 +18,13 @@ class OGRENextConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        self.requires("zlib/[1.x]")
-        self.requires("zziplib/[0.13.x]")
-        self.requires("freetype/[2.x]")
-        self.requires("freeimage/[3.x]")
+        self.requires("zlib/[~1]")
+        self.requires("zziplib/[~0.13]")
+        self.requires("freetype/[~2]")
+        self.requires("freeimage/[~3]")
         self.requires("rapidjson/cci.20220822")
-        self.requires("libpng/1.6.38")
-        self.requires("sdl/[2.x]")
-        self.requires("tinyxml/[2.x]")
+        self.requires("sdl/[~2]")
+        self.requires("tinyxml/[~2]")
 
     def system_requirements(self):
         Apt(self).install([
@@ -33,6 +32,7 @@ class OGRENextConan(ConanFile):
                 "libxaw7-dev",
                 "libxrandr-dev",
                 "libgles2-mesa-dev",
+                "libglu1-mesa-dev",
                 "libvulkan-dev",
                 "glslang-dev"
         ], check=True)

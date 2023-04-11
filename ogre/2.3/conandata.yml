@@ -5,3 +5,6 @@ sources:
   "2023.01":
     url: "https://github.com/OGRECave/ogre-next/archive/186ea7ee972860ed09bcdbcdd99f609348c6aa8b.tar.gz"
     sha256: "38a93399b5ce2b053894e858cafa3830118ff938f40204c727a77c9233744e8f"
+  "2023.04":
+    url: "https://github.com/OGRECave/ogre-next/archive/c1c24caaae98497d4eec0a382226ebc903a8ae5f.tar.gz"
+    sha256: "131f62139690d7ccaf38f80a91852254edb1f9fb911fa62536443c390bd5ae93"
