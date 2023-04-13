@@ -45,6 +45,11 @@ class MyGUIConan(ConanFile):
             "freetype",
         )
         replace_in_file(self,
+            os.path.join(self.source_folder, "CMake/Dependencies.cmake"),
+            "find_package(OGRE_Old)",
+            "find_package(OGRE CONFIG)",
+        )
+        replace_in_file(self,
             os.path.join(self.source_folder, "Platforms/Ogre/OgrePlatform/CMakeLists.txt"),
             "${OGRE_LIBRARIES}",
             "OGRE::OGRE",
