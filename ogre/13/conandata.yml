@@ -50,6 +50,9 @@ sources:
   "13.6.4":
     url: "https://github.com/OGRECave/ogre/archive/refs/tags/v13.6.4.tar.gz"
     sha256: "9a8bde4884b2ce66594d2192c5147a07ad0e7b0fc87de86c798597142867d272"
+  "13.6.5":
+    url: "https://github.com/OGRECave/ogre/archive/refs/tags/v13.6.5.tar.gz"
+    sha256: "857f74d18c4bb484f0e31c288b8d27837615a59c3da2b3d8304496c83ef669cd"
 patches:
   "13.2.4":
     - patch_file: "patches/13.2.4/pugixml-fix.patch"
@@ -100,5 +103,8 @@ patches:
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
   "13.6.4":
+    - patch_file: "patches/13.3.1/pugixml-fix.patch"
+    - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
+  "13.6.5":
     - patch_file: "patches/13.3.1/pugixml-fix.patch"
     - patch_file: "patches/13.3.1/FindPkgMacros.cmake.patch"
