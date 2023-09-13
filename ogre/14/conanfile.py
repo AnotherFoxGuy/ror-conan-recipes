@@ -30,7 +30,7 @@ class OGREConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        self.requires("zlib/[~1]")
+        #self.requires("zlib/[~1]")
         self.requires("freetype/[~2]")
         self.requires("freeimage/[~3]")
         self.requires("cg-toolkit/3.1@anotherfoxguy/stable")
@@ -38,6 +38,9 @@ class OGREConan(ConanFile):
         self.requires("sdl/[~2]")
         if self.settings.os == "Windows":
             self.requires("directx-sdk/9.0@anotherfoxguy/stable")
+        self.requires("libpng/1.6.39", override=True)
+        self.requires("libwebp/1.3.1", override=True)
+        self.requires("zlib/1.3", override=True)
 
     def system_requirements(self):
         Apt(self).install([
