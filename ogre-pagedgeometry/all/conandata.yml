@@ -8,3 +8,6 @@ sources:
   "2022.08":
     url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/8637c7f4b6238ced28e741bb6e4d4ddc8b60b477.zip"
     sha256: "b83884652dc773e6c58e8efebfb950de714f6e34161a0fb388d2f546efea3a87"
+  "2023.07":
+    url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/f8b3c067fb0850afc0490ada49c501bef6b702b9.zip"
+    sha256: "b8f4837372e4c3defd4ccb0416613ee33f6032974dba36363dc35cc74f9b3642"
