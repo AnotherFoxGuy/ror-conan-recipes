@@ -1,2 +1,4 @@
 - repo: OGRECave/ogre
   folder: "14"
+- repo: OGRECave/ogre-next
+  folder: "2.3"

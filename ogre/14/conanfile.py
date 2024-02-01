@@ -40,7 +40,7 @@ class OGREConan(ConanFile):
             self.requires("directx-sdk/9.0@anotherfoxguy/stable")
         self.requires("libpng/1.6.39", override=True)
         self.requires("libwebp/1.3.1", override=True)
-        self.requires("zlib/1.3", override=True)
+        self.requires("zlib/1.3", force=True)
 
     def system_requirements(self):
         Apt(self).install([
