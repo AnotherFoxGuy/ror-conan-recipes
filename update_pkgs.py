@@ -6,14 +6,20 @@ from packaging import version
 from lastversion import latest
 from urllib.request import urlretrieve
 from filehash import FileHash
+import re
 
 
 def update_pkg(repo, folder):
     path = os.path.join(folder, "conandata.yml")
     with open(path, "r") as file:
         conandata = yaml.load(file, Loader=yaml.FullLoader)
-    v = sorted(conandata["sources"].items(), reverse=True)[0][0]
+
+    versions = [
+        x for x in conandata["sources"].items() if not re.match(r"^\d{4}\..*", x[0])
+    ]
+    v = sorted(versions, reverse=True)[0][0]
     latest_version = latest(repo=repo, output_format="dict")
+    
     if latest_version["version"] > version.parse(v):
         print(f'{repo} has newer version: {latest_version["version"]} (from: {v})')
         url = f'https://github.com/{repo}/archive/refs/tags/{latest_version["tag_name"]}.tar.gz'
