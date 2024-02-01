@@ -18,13 +18,17 @@ class OGRENextConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        self.requires("zlib/[~1]")
+        # self.requires("zlib/[~1]")
         self.requires("zziplib/[~0.13]")
         self.requires("freetype/[~2]")
         self.requires("freeimage/[~3]")
         self.requires("rapidjson/cci.20220822")
         self.requires("sdl/[~2]")
         self.requires("tinyxml/[~2]")
+
+        self.requires("libpng/1.6.40", force=True)
+        self.requires("libwebp/1.3.1", force=True)
+        self.requires("zlib/1.3", force=True)
 
     def system_requirements(self):
         Apt(self).install([
@@ -47,9 +51,10 @@ class OGRENextConan(ConanFile):
         tc.variables["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
         tc.variables["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
         tc.variables["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
-        tc.variables["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
-        tc.variables["OGRE_BUILD_COMPONENT_TERRAIN"] = "ON"
         #tc.variables["OGRE_BUILD_COMPONENT_PAGING"] = "ON" # Completly broken
+        tc.variables["OGRE_BUILD_COMPONENT_PLANAR_REFLECTIONS"] = "ON"
+        tc.variables["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
+        # tc.variables["OGRE_BUILD_COMPONENT_TERRAIN"] = "ON"
         tc.variables["OGRE_BUILD_DEPENDENCIES"] = "OFF"
         tc.variables["OGRE_BUILD_PLUGIN_DOT_SCENE"] = "OFF"
         tc.variables["OGRE_BUILD_PLUGIN_EXRCODEC"] = "OFF"
@@ -79,6 +84,11 @@ class OGRENextConan(ConanFile):
             os.path.join(self.source_folder, "Components/Overlay/CMakeLists.txt"),
             "${FREETYPE_LIBRARIES}",
             "freetype",
+        )
+        replace_in_file(self,
+            os.path.join(self.source_folder, "OgreMain/CMakeLists.txt"),
+            "\"${ZLIB_LIBRARIES}\"",
+            "ZLIB::ZLIB",
         )
         replace_in_file(self,
             os.path.join(self.source_folder, "CMake/InstallDependencies.cmake"),

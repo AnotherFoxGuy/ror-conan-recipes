@@ -1,10 +1,28 @@
 sources:
-  "2022.10":
-    url: "https://github.com/OGRECave/ogre-next/archive/ede1690bb3dcf932df6a06f06e9e6de585e5eeea.tar.gz"
-    sha256: "6baf05cc4dc14cb70b6f4a958dbc7ac79a209eb9658733d0b19f651a5f96da08"
-  "2023.01":
-    url: "https://github.com/OGRECave/ogre-next/archive/186ea7ee972860ed09bcdbcdd99f609348c6aa8b.tar.gz"
-    sha256: "38a93399b5ce2b053894e858cafa3830118ff938f40204c727a77c9233744e8f"
-  "2023.04":
-    url: "https://github.com/OGRECave/ogre-next/archive/c1c24caaae98497d4eec0a382226ebc903a8ae5f.tar.gz"
-    sha256: "131f62139690d7ccaf38f80a91852254edb1f9fb911fa62536443c390bd5ae93"
+  2.3.2:
+    sha256: a77e846eebcd832453b30e92212ab01c359bf6e5354aac00d4446f8103813415
+    url: https://github.com/OGRECave/ogre-next/archive/refs/tags/v2.3.2.tar.gz
+  2.3.3:
+    sha256: 92ce7765d892d6424df3d8d4a56a8fc0b2f4f91c216b1b1d5b231caa9abaaa38
+    url: https://github.com/OGRECave/ogre-next/archive/refs/tags/v2.3.3.tar.gz
+  '2022.10':
+    sha256: 6baf05cc4dc14cb70b6f4a958dbc7ac79a209eb9658733d0b19f651a5f96da08
+    url: https://github.com/OGRECave/ogre-next/archive/ede1690bb3dcf932df6a06f06e9e6de585e5eeea.tar.gz
+  '2023.01':
+    sha256: 38a93399b5ce2b053894e858cafa3830118ff938f40204c727a77c9233744e8f
+    url: https://github.com/OGRECave/ogre-next/archive/186ea7ee972860ed09bcdbcdd99f609348c6aa8b.tar.gz
+  '2023.04':
+    sha256: 131f62139690d7ccaf38f80a91852254edb1f9fb911fa62536443c390bd5ae93
+    url: https://github.com/OGRECave/ogre-next/archive/c1c24caaae98497d4eec0a382226ebc903a8ae5f.tar.gz
+  '2023.05':
+    sha256: d781060299bfbdcf6e35f54e33c98ff0e468791fd21f0a3618664ae4a1f182c9
+    url: https://github.com/OGRECave/ogre-next/archive/bb40519a10c3ebdf6ec721bb65544816b3b518ab.tar.gz
+  '2023.09':
+    sha256: 0e527ef107cba4f82100790308e1e169b7fae8b1398d77e9f1361edcc8eabf45
+    url: https://github.com/OGRECave/ogre-next/archive/8c89911c7a3e9364ee1bd998920b03680fa068f9.tar.gz
+  2023.09.1:
+    sha256: 6e829ae456285d96a3b17580e43992edcee8dab308b667d6edcd9856fd1894e0
+    url: https://github.com/OGRECave/ogre-next/archive/f01c889c0f20975e0a13872aafe51363a4019892.tar.gz
+  '2024.01':
+    sha256: 4e7adc22614c5b665b63cdf24f84c6f91f2945e251168c751bd67b0889f270ee
+    url: https://github.com/OGRECave/ogre-next/archive/9727b3b4362abff9071de40c31e57df07091f7f7.tar.gz
