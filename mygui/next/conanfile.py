@@ -18,8 +18,8 @@ class MyGUIConan(ConanFile):
 
     def requirements(self):
         if not self.options.system_ogre:
-            # self.requires("ogre3d-next/[2.x]@anotherfoxguy/stable")
-            self.requires("ogre3d-next/2023.01@anotherfoxguy/testing")
+            # self.requires("ogre3d-next/[~2]@anotherfoxguy/stable")
+            self.requires("ogre3d-next/2024.01@anotherfoxguy/stable")
 
     def source(self):
         get(self, **self.conan_data["sources"][self.version], strip_root=True)
@@ -42,23 +42,29 @@ class MyGUIConan(ConanFile):
         deps.generate()
 
     def _patch_sources(self):
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "MyGUIEngine/CMakeLists.txt"),
             "${FREETYPE_LIBRARIES}",
             "freetype",
         )
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "MyGUIEngine/CMakeLists.txt"),
             "use_precompiled_header(${PROJECTNAME}",
             "target_precompile_headers(${PROJECTNAME} PRIVATE",
         )
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "CMakeLists.txt"),
             "# Find dependencies",
             "find_package(OGRE REQUIRED)",
         )
-        replace_in_file(self,
-            os.path.join(self.source_folder, "Platforms/Ogre2/Ogre2Platform/CMakeLists.txt"),
+        replace_in_file(
+            self,
+            os.path.join(
+                self.source_folder, "Platforms/Ogre2/Ogre2Platform/CMakeLists.txt"
+            ),
             "${OGRE_LIBRARIES}",
             "OGRE::OGRE",
         )
@@ -78,9 +84,9 @@ class MyGUIConan(ConanFile):
         self.cpp_info.set_property("cmake_module_target_name", "MyGUI::MyGUI")
         self.cpp_info.set_property("cmake_file_name", "MyGUI")
         self.cpp_info.set_property("cmake_target_name", "MyGUI::MyGUI")
-        self.cpp_info.includedirs = ['include/MYGUI']
+        self.cpp_info.includedirs = ["include/MYGUI"]
         # Directories where libraries can be found
-        self.cpp_info.libdirs = ['lib', f'lib/{self.settings.build_type}']
+        self.cpp_info.libdirs = ["lib", f"lib/{self.settings.build_type}"]
         self.cpp_info.libs = collect_libs(self)
 
     def package_id(self):
