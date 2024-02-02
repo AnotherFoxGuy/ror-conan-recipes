@@ -23,7 +23,11 @@ packages = []
 repo = Repo(os.getcwd())
 
 for c in repo.head.commit.stats.files:
-    if c.endswith("conanfile.py") or c.endswith("conandata.yml"):
+    if (
+        c.endswith("conanfile.py")
+        or c.endswith("conandata.yml")
+        or c.endswith("config.yml")
+    ):
         dirs.append(c.split("/")[0])
 
 dirs = list(dict.fromkeys(dirs))
@@ -59,7 +63,7 @@ for pkg in packages:
     f.write(f"[requires]\n{pkg}")
     f.close()
     system(
-        f'conan install . -pr="./.conan-profiles/{conan_profile}" -b=missing -of tmp'
+        f'conan install . -pr="./.conan-profiles/{conan_profile}" -b=missing -of tmp -c tools.system.package_manager:mode=install -c tools.system.package_manager:sudo=True'
     )
 
 for pkg in packages:
