@@ -5,3 +5,4 @@ upload.*
 build_tmp.py
 __pycache__
 conanfile-old.py
+conanfile.txt

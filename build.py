@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import os
-from glob import glob
 import yaml
-import subprocess
+from git import Repo
+import re
+from conan.api.conan_api import ConanAPI
 
 
 def system(command):
@@ -11,32 +12,55 @@ def system(command):
         raise Exception("Error while executing:\n\t %s" % command)
 
 
-dirs = glob("./*/")
+conan_profile = os.getenv("CONAN_PROFILE") or "ubuntu-release"
+conan = ConanAPI()
 
+regex = r'name *= *"([\w-]+)"$'
+
+dirs = []
 packages = []
 
-conan_profile = os.getenv('CONAN_PROFILE')
+repo = Repo(os.getcwd())
+
+for c in repo.head.commit.stats.files:
+    if c.endswith("conanfile.py") or c.endswith("conandata.yml"):
+        dirs.append(c.split("/")[0])
+
+dirs = list(dict.fromkeys(dirs))
 
 for p in dirs:
-    path = f'{p}/config.yml'
+    path = os.path.join(os.getcwd(), p, "config.yml")
     if not os.path.isfile(path):
         continue
     with open(path) as file:
-        config = yaml.load(file, Loader=yaml.FullLoader)
+        config = yaml.safe_load(file)
 
-        for val in config.values():
-            for v, y in val.items():
-                packages.append(f"{p}{y['folder']} {v}@anotherfoxguy/stable")
+        for val in config["versions"].items():
+            version = val[0]
+            folder = val[1]["folder"]
+
+            cpath = os.path.join(os.getcwd(), p, folder, "conanfile.py")
+            with open(cpath) as cf:
+                name = re.findall(regex, cf.read(), re.MULTILINE)[0]
+
+            r, _ = conan.export.export(
+                name=name,
+                path=cpath,
+                version=version,
+                user="anotherfoxguy",
+                channel="stable",
+            )
+            packages.append(r.repr_notime())
+
 
 for pkg in packages:
-    system(f"conan export {pkg}")
+    print(pkg)
+    f = open("conanfile.txt", "w")
+    f.write(f"[requires]\n{pkg}")
+    f.close()
+    system(
+        f'conan install . -pr="./.conan-profiles/{conan_profile}" -b=missing -of tmp'
+    )
 
 for pkg in packages:
-    system(f"conan create {pkg} -pr=\"./.conan-profiles/{conan_profile}\" -k -b=outdated")
-
-
-data = list(filter(lambda k: 'anotherfoxguy' in k, subprocess.run(
-    ['conan', 'search', '*', '--raw'], stdout=subprocess.PIPE).stdout.decode("utf-8").split()))
-
-for d in data:
-    system(f"conan upload {d} -r conan-afg --all --force")
+    system(f"conan upload {pkg} -r rigs-of-rods-deps")

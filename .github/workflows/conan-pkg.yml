@@ -36,19 +36,18 @@ jobs:
     name: ${{ matrix.config.name }}
     env:
       DXSDK_DIR: C:\apps\Microsoft DirectX SDK\
+      CONAN_LOGIN_USERNAME: anotherfoxguy
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v4
 
       - name: Install Conan
         run: |
           pip install -r requirements.txt
-          conan profile new default --detect
-
-      - name: Fix libstdc++11
-        if: startsWith(matrix.config.os, 'ubuntu')
-        run: conan profile update settings.compiler.libcxx=libstdc++11 default
+          conan profile detect --force
 
       - name: Enable Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1.10.0
@@ -59,5 +58,5 @@ jobs:
           CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
           CONAN_PROFILE: ${{ matrix.config.conan-profile }}
         run: |
-          conan remote add conan-afg https://conan.anotherfoxguy.com
+          conan remote add rigs-of-rods-deps https://conan.cloudsmith.io/rigs-of-rods/deps/
           python build.py
