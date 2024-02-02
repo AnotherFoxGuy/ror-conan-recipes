@@ -36,7 +36,6 @@ jobs:
     name: ${{ matrix.config.name }}
     env:
       DXSDK_DIR: C:\apps\Microsoft DirectX SDK\
-      CONAN_LOGIN_USERNAME: anotherfoxguy
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,7 +53,7 @@ jobs:
 
       - name: Run
         env:
-          CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
+          CONAN_LOGIN_USERNAME: anotherfoxguy
           CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
           CONAN_PROFILE: ${{ matrix.config.conan-profile }}
         run: |
