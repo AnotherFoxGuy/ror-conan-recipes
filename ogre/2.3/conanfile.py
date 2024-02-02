@@ -1,8 +1,16 @@
 from conan import ConanFile
-from conan.tools.files import get, collect_libs, rmdir, replace_in_file, apply_conandata_patches, export_conandata_patches
+from conan.tools.files import (
+    get,
+    collect_libs,
+    rmdir,
+    replace_in_file,
+    apply_conandata_patches,
+    export_conandata_patches,
+)
 from conan.tools.cmake import CMakeToolchain, CMake, CMakeDeps, cmake_layout
 from conan.tools.system.package_manager import Apt
 import os
+
 
 class OGRENextConan(ConanFile):
     name = "ogre3d-next"
@@ -22,24 +30,27 @@ class OGRENextConan(ConanFile):
         self.requires("zziplib/[~0.13]")
         self.requires("freetype/[~2]")
         self.requires("freeimage/[~3]")
-        self.requires("rapidjson/cci.20220822")
+        self.requires("rapidjson/cci.20230929")
         self.requires("sdl/[~2]")
         self.requires("tinyxml/[~2]")
 
         self.requires("libpng/1.6.40", force=True)
-        self.requires("libwebp/1.3.1", force=True)
+        self.requires("libwebp/1.3.2", force=True)
         self.requires("zlib/1.3", force=True)
 
     def system_requirements(self):
-        Apt(self).install([
+        Apt(self).install(
+            [
                 "libx11-dev",
                 "libxaw7-dev",
                 "libxrandr-dev",
                 "libgles2-mesa-dev",
                 "libglu1-mesa-dev",
                 "libvulkan-dev",
-                "glslang-dev"
-        ], check=True)
+                "glslang-dev",
+            ],
+            check=True,
+        )
 
     def source(self):
         get(self, **self.conan_data["sources"][self.version], strip_root=True)
@@ -51,7 +62,7 @@ class OGRENextConan(ConanFile):
         tc.variables["OGRE_BUILD_COMPONENT_CSHARP"] = "OFF"
         tc.variables["OGRE_BUILD_COMPONENT_JAVA"] = "OFF"
         tc.variables["OGRE_BUILD_COMPONENT_OVERLAY_IMGUI"] = "ON"
-        #tc.variables["OGRE_BUILD_COMPONENT_PAGING"] = "ON" # Completly broken
+        # tc.variables["OGRE_BUILD_COMPONENT_PAGING"] = "ON" # Completly broken
         tc.variables["OGRE_BUILD_COMPONENT_PLANAR_REFLECTIONS"] = "ON"
         tc.variables["OGRE_BUILD_COMPONENT_PYTHON"] = "OFF"
         # tc.variables["OGRE_BUILD_COMPONENT_TERRAIN"] = "ON"
@@ -70,37 +81,41 @@ class OGRENextConan(ConanFile):
         deps = CMakeDeps(self)
         deps.generate()
 
-    def _patch_sources(self):  
+    def _patch_sources(self):
         apply_conandata_patches(self)
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "CMake/Dependencies.cmake"),
-            "find_package(Rapidjson)", 
+            "find_package(Rapidjson)",
             """
             find_package(RapidJSON)
             set(Rapidjson_FOUND TRUE)
             """,
         )
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "Components/Overlay/CMakeLists.txt"),
             "${FREETYPE_LIBRARIES}",
             "freetype",
         )
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "OgreMain/CMakeLists.txt"),
-            "\"${ZLIB_LIBRARIES}\"",
+            '"${ZLIB_LIBRARIES}"',
             "ZLIB::ZLIB",
         )
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "CMake/InstallDependencies.cmake"),
             "# Install dependencies",
             "return()",
         )
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "OgreMain/CMakeLists.txt"),
             "target_link_libraries(${OGRE_NEXT}Main ${LIBRARIES})",
             "target_link_libraries(${OGRE_NEXT}Main ${LIBRARIES} rapidjson freeimage::FreeImage)",
         )
-
 
     def build(self):
         self._patch_sources()
@@ -143,5 +158,5 @@ class OGRENextConan(ConanFile):
             "include/OGRE/Vao",
         ]
         # Directories where libraries can be found
-        self.cpp_info.libdirs = ['lib', f'lib/{self.settings.build_type}']
+        self.cpp_info.libdirs = ["lib", f"lib/{self.settings.build_type}"]
         self.cpp_info.libs = collect_libs(self)

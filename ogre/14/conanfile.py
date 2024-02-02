@@ -1,8 +1,16 @@
 from conan import ConanFile
-from conan.tools.files import get, collect_libs, rmdir, replace_in_file, apply_conandata_patches, export_conandata_patches
+from conan.tools.files import (
+    get,
+    collect_libs,
+    rmdir,
+    replace_in_file,
+    apply_conandata_patches,
+    export_conandata_patches,
+)
 from conan.tools.cmake import CMakeToolchain, CMake, CMakeDeps, cmake_layout
 from conan.tools.system.package_manager import Apt
 import os
+
 
 class OGREConan(ConanFile):
     name = "ogre3d"
@@ -18,8 +26,8 @@ class OGREConan(ConanFile):
     }
 
     default_options = {
-        "resourcemanager_strict": "strict",
-        "nodeless_positioning": False,
+        "resourcemanager_strict": "off",
+        "nodeless_positioning": True,
         "codec_rsimage": False,
     }
 
@@ -30,7 +38,7 @@ class OGREConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        #self.requires("zlib/[~1]")
+        # self.requires("zlib/[~1]")
         self.requires("freetype/[~2]")
         self.requires("freeimage/[~3]")
         self.requires("cg-toolkit/3.1@anotherfoxguy/stable")
@@ -38,20 +46,24 @@ class OGREConan(ConanFile):
         self.requires("sdl/[~2]")
         if self.settings.os == "Windows":
             self.requires("directx-sdk/9.0@anotherfoxguy/stable")
-        self.requires("libpng/1.6.39", override=True)
-        self.requires("libwebp/1.3.1", override=True)
+
+        self.requires("libpng/1.6.40", override=True)
+        self.requires("libwebp/1.3.2", override=True)
         self.requires("zlib/1.3", force=True)
 
     def system_requirements(self):
-        Apt(self).install([
+        Apt(self).install(
+            [
                 "libx11-dev",
                 "libxaw7-dev",
                 "libxrandr-dev",
                 "libgles2-mesa-dev",
                 "libglu1-mesa-dev",
                 "libvulkan-dev",
-                "glslang-dev"
-        ], check=True)
+                "glslang-dev",
+            ],
+            check=True,
+        )
 
     def source(self):
         get(self, **self.conan_data["sources"][self.version], strip_root=True)
@@ -93,22 +105,26 @@ class OGREConan(ConanFile):
 
     def _patch_sources(self):
         apply_conandata_patches(self)
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "CMake/Dependencies.cmake"),
             "find_package(DirectX)",
             "find_package(DirectX9)",
         )
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "PlugIns/FreeImageCodec/CMakeLists.txt"),
             "${FreeImage_LIBRARIES}",
             "freeimage::FreeImage",
         )
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "Components/Overlay/CMakeLists.txt"),
             "${FREETYPE_LIBRARIES}",
             "freetype",
         )
-        replace_in_file(self,
+        replace_in_file(
+            self,
             os.path.join(self.source_folder, "CMake/Packages/FindDirectX11.cmake"),
             'find_path(DirectX11_INCLUDE_DIR NAMES d3d11.h HINTS "',
             'find_path(DirectX11_INCLUDE_DIR NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NAMES d3d11.h HINTS "',
