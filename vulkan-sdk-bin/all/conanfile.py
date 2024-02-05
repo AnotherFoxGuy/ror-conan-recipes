@@ -8,9 +8,9 @@ class VulkanConan(ConanFile):
     author = "Edgar Edgar@AnotherFoxGuy.com"
     settings = "os", "arch"
 
-    def requirements(self):
+    def build_requirements(self):
         if self.settings.os == "Windows":
-            self.requires("7zip/23.01")
+            self.tool_requires("7zip/23.01")
 
     def build(self):
         if self.settings.os == "Windows":
@@ -29,6 +29,7 @@ class VulkanConan(ConanFile):
         copy(self, "*", os.path.join(self.source_folder, "x86_64"), self.package_folder)
 
     def package_info(self):
+        self.buildenv_info.define("VULKAN_SDK", self.package_folder)
         self.cpp_info.set_property("cmake_module_file_name", "Vulkan")
         self.cpp_info.set_property("cmake_module_target_name", "Vulkan::Vulkan")
         self.cpp_info.set_property("cmake_file_name", "Vulkan")
