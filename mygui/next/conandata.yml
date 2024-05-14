@@ -2,3 +2,6 @@ sources:
   "2023.04":
     url: "https://github.com/cryham/mygui-next/archive/0002a5946c8778e6b333cb10afc1a1c5d9e57030.tar.gz"
     sha256: "d2c9cbd1ab127b37aae64f4a683b003d50cebd6a1072a6c679b44ca9415cf84a"
+  "2024.01":
+    url: "https://github.com/cryham/mygui-next/archive/a1490ffe01d503c31a00d8277007ffcb27a4258e.tar.gz"
+    sha256: "ce08579fa7ce1bf8229f56a4a5717ba5b2f612f2831dc23470c951e9f7b5f4b8"
