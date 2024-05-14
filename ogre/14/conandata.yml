@@ -11,6 +11,12 @@ patches:
   14.1.2:
   - patch_file: patches/14.0.0/pugixml-fix.patch
   - patch_file: patches/14.0.0/FindPkgMacros.cmake.patch
+  14.2.0:
+  - patch_file: patches/14.0.0/pugixml-fix.patch
+  - patch_file: patches/14.0.0/FindPkgMacros.cmake.patch
+  14.1.5:
+  - patch_file: patches/14.0.0/pugixml-fix.patch
+  - patch_file: patches/14.0.0/FindPkgMacros.cmake.patch
 sources:
   14.0.0:
     sha256: 8aa99716252d6a161f280bf2c460a7aa290e7c138b80be51abb85132ef14f5eb
@@ -27,3 +33,6 @@ sources:
   14.2.0:
     sha256: d9de893f80c0a91ca5372add416a24851a84825fb5631a3d54c9ba4413503639
     url: https://github.com/OGRECave/ogre/archive/refs/tags/v14.2.0.tar.gz
+  14.2.5:
+    sha256: 4e96732eef15f6143f36ae6cb31b7211057146e12d65613b56012afb2b3b2563
+    url: https://github.com/OGRECave/ogre/archive/refs/tags/v14.2.5.tar.gz
