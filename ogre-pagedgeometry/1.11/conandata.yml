@@ -1,0 +1,4 @@
+sources:
+  "1.2.2-ror":
+    url: "https://github.com/RigsOfRods/ogre-pagedgeometry/archive/2056bc5437193aff386e8a855af8c163bb9ade38.zip"
+    sha256: "2ac645ff2c9d56e11a84913101f1c003ea0a044f54df3747af6d96bd67b666f5"
