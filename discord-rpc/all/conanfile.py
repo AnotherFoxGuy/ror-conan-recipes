@@ -48,8 +48,8 @@ class DiscordrpcConan(ConanFile):
         replace_in_file(
             self,
             os.path.join(self.source_folder, "CMakeLists.txt"),
-            "CLANG_FORMAT_CMD",
-            "0"
+            "find_program(CLANG_FORMAT_CMD",
+            "# find_program(CLANG_FORMAT_CMD",
         )
 
     def build(self):
