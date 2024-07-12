@@ -1,0 +1,11 @@
+--- OgreMain/CMakeLists.txt
++++ OgreMain/CMakeLists.txt
+@@ -475,7 +475,7 @@
+     set_target_properties(OgreMain PROPERTIES	OUTPUT_NAME Ogre)
+   endif ()
+ endif ()
+-target_link_libraries(OgreMain ${LIBRARIES})
++target_link_libraries(OgreMain ${LIBRARIES} RapidJSON::RapidJSON freeimage::FreeImage)
+ if (MINGW)
+   # may need winsock htons functions for FreeImage
+   target_link_libraries(OgreMain ws2_32)

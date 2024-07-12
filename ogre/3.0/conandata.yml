@@ -1,0 +1,4 @@
+sources:
+  '2024-04':
+    sha256: 356c82cf75b5385c0813e920762bfcb7f3a8ae7c1c1ffe493671b00d39607ccc 
+    url: https://github.com/OGRECave/ogre-next/archive/9db033b045e11a4d435391ed244cdfd4ee1e9748.tar.gz
