@@ -1,0 +1,79 @@
+env:
+  APT_MATRIX_SPLIT_BY_BUILD_TYPES: "true"
+  CONAN_BUILD_POLICY: "missing"
+  CONAN_REMOTES: "https://conan.cloudsmith.io/rigs-of-rods/deps/"
+  CONAN_UPLOAD: "https://conan.cloudsmith.io/rigs-of-rods/deps/"
+  APT_NO_UPLOAD: "True"
+
+on:
+  push:
+    branches: ["main", "testing"]
+  pull_request:
+
+# You can add custom environment variables above the version tag
+# Do not modify the tag or anything below the tag
+# This script gets automatically updated
+#
+# Possible configurations:
+# env:
+#   APT_MATRIX_SPLIT_BY_BUILD_TYPES: "false"  # Possible values "false", "true", default: false
+#
+# You can furthermore set any environment variable understood by Conan and Conan Package Tools
+#
+# You can also update the event triggers, which default to
+# on: [push, pull_request]
+
+name: conan
+
+jobs:
+  generate-matrix:
+    name: Generate Job Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    env:
+      APT_CONFIG_FILE_VERSION: "12"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Package Tools
+        run: |
+          pip install git+https://github.com/AnotherFoxGuy/afgs-conan-package-tools@develop
+          conan profile detect
+      - name: Generate Job Matrix
+        id: set-matrix
+        run: |
+          MATRIX=$(afgs-package-tools generate-ci-jobs --platform gha)
+          echo "${MATRIX}"
+          echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
+          cat acpt-log.txt
+  conan:
+    needs: generate-matrix
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
+    name: ${{ matrix.config.name }}
+    env:
+      APT_CONFIG_FILE_VERSION: "12"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Conan
+        env:
+          APT_MATRIX: ${{toJson(matrix.config)}}
+        run: |
+          pip install git+https://github.com/AnotherFoxGuy/afgs-conan-package-tools@develop
+          # remove newlines from matrix first
+          matrix=$(echo ${APT_MATRIX})
+          afgs-package-tools prepare-env --platform gha --config "${matrix}"
+        shell: bash
+      - name: Run
+        run: |
+          afgs-package-tools --auto

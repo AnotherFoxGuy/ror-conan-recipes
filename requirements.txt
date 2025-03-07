@@ -1,3 +1,0 @@
-conan
-pyyaml
-GitPython
