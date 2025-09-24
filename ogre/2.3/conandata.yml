@@ -26,3 +26,6 @@ sources:
   '2024.01':
     sha256: 4e7adc22614c5b665b63cdf24f84c6f91f2945e251168c751bd67b0889f270ee
     url: https://github.com/OGRECave/ogre-next/archive/9727b3b4362abff9071de40c31e57df07091f7f7.tar.gz
+  3.0.0:
+    sha256: 7818085243018178730bdbe85a84d358e49b3b19e3ff65e02d33b008e778210d
+    url: https://github.com/OGRECave/ogre-next/archive/refs/tags/v3.0.0.tar.gz
