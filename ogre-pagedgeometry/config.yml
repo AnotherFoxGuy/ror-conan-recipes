@@ -1,5 +1,5 @@
 versions:
-  "1.2.2-ror":
+  "1.2.0":
     folder: "1.11"
   "2022.08":
     folder: all

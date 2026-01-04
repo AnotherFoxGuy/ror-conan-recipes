@@ -64,6 +64,8 @@ class OGREConan(ConanFile):
 
         if self.settings.os == "Windows":
             tc.variables["CMAKE_CXX_FLAGS"] = "-D_OGRE_FILESYSTEM_ARCHIVE_UNICODE"
+
+        tc.cache_variables["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
         tc.generate()
         deps = CMakeDeps(self)
         deps.generate()

@@ -24,6 +24,7 @@ class DiscordrpcConan(ConanFile):
     def generate(self):
         tc = CMakeToolchain(self)
         tc.variables["BUILD_EXAMPLES"] = "OFF"
+        tc.cache_variables["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
         tc.generate()
 
     def _patch_sources(self):

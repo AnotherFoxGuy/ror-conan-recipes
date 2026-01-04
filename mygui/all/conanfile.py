@@ -21,6 +21,9 @@ class MyGUIConan(ConanFile):
             self.requires("ogre3d/[>=1 <15]@anotherfoxguy/stable")
             self.requires("zlib/1.3", override=True)
 
+    def build_requirements(self):
+        self.tool_requires("cmake/[>=3.22 <4]")
+
     def source(self):
         get(self, **self.conan_data["sources"][self.version], strip_root=True)
 
@@ -32,9 +35,6 @@ class MyGUIConan(ConanFile):
         tc.variables["MYGUI_BUILD_PLUGINS"] = "OFF"
         tc.variables["MYGUI_BUILD_TOOLS"] = "OFF"
         tc.variables["MYGUI_RENDERSYSTEM"] = "3"
-        tc.variables["OIS_BUILD_DEMOS"] = "OFF"
-        tc.variables["OIS_BUILD_DEMOS"] = "OFF"
-        tc.variables["OIS_BUILD_DEMOS"] = "OFF"
         tc.generate()
         deps = CMakeDeps(self)
         deps.generate()
@@ -54,6 +54,14 @@ class MyGUIConan(ConanFile):
             os.path.join(self.source_folder, "Platforms/Ogre/OgrePlatform/CMakeLists.txt"),
             "${OGRE_LIBRARIES}",
             "OGRE::OGRE",
+        )
+        replace_in_file(self,
+            os.path.join(self.source_folder, "CMake/Utils/PrecompiledHeader.cmake"),
+            "if (MSVC)",
+            """
+            target_precompile_headers(${TARGET} PRIVATE ${SRC_FILE})
+            if (0)
+            """,
         )
 
     def build(self):

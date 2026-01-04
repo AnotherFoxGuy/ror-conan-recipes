@@ -11,6 +11,11 @@ sources:
   "2022.08":
     url: "https://github.com/OGRECave/ogre-caelum/archive/4bd1b0581d55896d37922483981582661ca557de.zip"
     sha256: "deffe26ba169d89954f62ade50e856fdae293078c73836378d7bf3051eff0a8d"
+  "2025.10":
+    url: "https://github.com/OGRECave/ogre-caelum/archive/8ce26a93fe85332e0741eb4224061ed88fa31ae0.zip"
+    sha256: "8c78ed81dac3266d752da0cff0f8cd6c7ace9849efc1f287ff16fb097f187fc6"
 patches:
   "2022.08":
+    - patch_file: "patches/2022.08/CMakeLists.txt.patch"
+  "2025.10":
     - patch_file: "patches/2022.08/CMakeLists.txt.patch"

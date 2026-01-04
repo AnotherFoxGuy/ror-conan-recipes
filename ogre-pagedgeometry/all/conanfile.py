@@ -14,13 +14,14 @@ class PagedGeometryConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        self.requires("ogre3d/[~13]@anotherfoxguy/stable")
+        self.requires("ogre3d/[~14]@anotherfoxguy/stable")
 
     def source(self):
         get(self, **self.conan_data["sources"][self.version], strip_root=True)
 
     def generate(self):
         tc = CMakeToolchain(self)
+        tc.cache_variables["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
         tc.generate()
         deps = CMakeDeps(self)
         deps.generate()

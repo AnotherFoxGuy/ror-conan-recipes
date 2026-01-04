@@ -11,3 +11,6 @@ sources:
   "2023.07":
     url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/f8b3c067fb0850afc0490ada49c501bef6b702b9.zip"
     sha256: "b8f4837372e4c3defd4ccb0416613ee33f6032974dba36363dc35cc74f9b3642"
+  "2025.10":
+    url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/5297d3d3f7deed4cf98217078c0fdf80eb28d19c.zip"
+    sha256: "8fb92af52c030481a034a46fede5cc997228bcc1c878edaf826ea6288b4bafbf"

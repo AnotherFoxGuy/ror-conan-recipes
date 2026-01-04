@@ -23,8 +23,7 @@ class CaelumConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        self.requires("ogre3d/[13.x]@anotherfoxguy/stable")
-        self.requires("libpng/1.6.38")
+        self.requires("ogre3d/[~14]@anotherfoxguy/stable")
 
     def source(self):
         get(self, **self.conan_data["sources"][self.version], strip_root=True)
@@ -32,6 +31,7 @@ class CaelumConan(ConanFile):
     def generate(self):
         tc = CMakeToolchain(self)
         tc.variables["CMAKE_DEBUG_POSTFIX"] = "d"
+        tc.cache_variables["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
         tc.generate()
         deps = CMakeDeps(self)
         deps.generate()
