@@ -30,7 +30,7 @@ jobs:
     env:
       DXSDK_DIR: C:\apps\Microsoft DirectX SDK\
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
