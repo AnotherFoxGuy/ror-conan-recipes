@@ -50,7 +50,6 @@ jobs:
           MATRIX=$(afgs-package-tools generate-ci-jobs)
           echo "${MATRIX}"
           echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
-          cat acpt-log.txt
   conan:
     needs: generate-matrix
     runs-on: ${{ matrix.config.os }}
