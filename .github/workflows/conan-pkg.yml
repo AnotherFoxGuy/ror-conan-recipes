@@ -19,13 +19,6 @@ jobs:
             os: ubuntu-latest
             conan-profile: ubuntu-release
 
-          - name: Windows 2019 Debug
-            os: windows-2019
-            conan-profile: vs-2019-debug
-          - name: Windows 2019 Release
-            os: windows-2019
-            conan-profile: vs-2019-release
-
           - name: Windows 2022 Debug
             os: windows-2022
             conan-profile: vs-2022-debug
@@ -49,7 +42,7 @@ jobs:
           conan profile detect --force
 
       - name: Enable Developer Command Prompt
-        uses: ilammy/msvc-dev-cmd@v1.13.0
+        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Run
         env:
