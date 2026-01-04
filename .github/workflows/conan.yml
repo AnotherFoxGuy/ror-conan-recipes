@@ -71,7 +71,7 @@ jobs:
           pip install git+https://github.com/AnotherFoxGuy/afgs-conan-package-tools@develop
           # remove newlines from matrix first
           matrix=$(echo ${APT_MATRIX})
-          afgs-package-tools prepare-env --config "${matrix}"
+          afgs-package-tools prepare-env --config "${matrix}" --platform gha
         shell: bash
       - name: Run
         run: |
