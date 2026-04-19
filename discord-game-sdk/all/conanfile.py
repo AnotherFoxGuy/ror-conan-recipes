@@ -1,5 +1,7 @@
-from conans import CMake, ConanFile, tools
-from conans.tools import os_info
+from conan import ConanFile
+from conan.tools.files import get, collect_libs, replace_in_file
+from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
+import os
 
 
 class DiscordGameSDKConan(ConanFile):
@@ -18,7 +20,7 @@ class DiscordGameSDKConan(ConanFile):
         return self._cmake
 
     def source(self):
-        tools.get(**self.conan_data["sources"][self.version], destination="src")
+        get(**self.conan_data["sources"][self.version], destination="src")
 
     def build(self):
         cmake = self._configure_cmake()
@@ -27,20 +29,20 @@ class DiscordGameSDKConan(ConanFile):
     def package(self):
         cmake = self._configure_cmake()
         cmake.install()
-        if os_info.is_windows:
+        if self.settings.os == "Windows":
             if self.settings.arch.__contains__('64'):
-                self.copy("*.lib", src="src/lib/x86_64", dst="lib", keep_path=False)
-                self.copy("*.dll", src="src/lib/x86_64", dst="bin", keep_path=False)
+                copy("*.lib", src="src/lib/x86_64", dst="lib", keep_path=False)
+                copy("*.dll", src="src/lib/x86_64", dst="bin", keep_path=False)
             else:
-                self.copy("*.lib", src="src/lib/x86", dst="lib", keep_path=False)
-                self.copy("*.dll", src="src/lib/x86", dst="bin", keep_path=False)
-        elif os_info.is_macos:
-            self.copy("*.bundle", src="src/lib/x86_64", dst="lib", keep_path=False)
-            self.copy("*.dylib", src="src/lib/x86_64", dst="bin", keep_path=False)
-            self.copy("*.so", src="src/lib/x86_64", dst="lib", keep_path=False)
+                copy("*.lib", src="src/lib/x86", dst="lib", keep_path=False)
+                copy("*.dll", src="src/lib/x86", dst="bin", keep_path=False)
+        elif self.settings.os == "MacOS":
+            copy("*.bundle", src="src/lib/x86_64", dst="lib", keep_path=False)
+            copy("*.dylib", src="src/lib/x86_64", dst="bin", keep_path=False)
+            copy("*.so", src="src/lib/x86_64", dst="lib", keep_path=False)
         else:
-            self.copy("*.so", src="src/lib/x86_64", dst="lib", keep_path=False)
+            copy("*.so", src="src/lib/x86_64", dst="lib", keep_path=False)
 
     def package_info(self): 
         self.cpp_info.name = "DiscordGameSDK"
-        self.cpp_info.libs = tools.collect_libs(self)
+        self.cpp_info.libs = collect_libs(self)
