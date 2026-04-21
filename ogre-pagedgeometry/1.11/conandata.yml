@@ -2,3 +2,18 @@ sources:
   "1.2.2-ror":
     url: "https://github.com/RigsOfRods/ogre-pagedgeometry/archive/2056bc5437193aff386e8a855af8c163bb9ade38.zip"
     sha256: "2ac645ff2c9d56e11a84913101f1c003ea0a044f54df3747af6d96bd67b666f5"
+  "1.2.0":
+    url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/7c9295f771e8c7973efc04d53283978ccd44fc9b.zip"
+    sha256: "513043eecf1aaf6f8b2335c953b0664128aa492007fe3d93068e5f4be436093a"
+  "1.3.0":
+    url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/18ca8a0abd26cb5d52b99ad8e8fa0c8f7e6e7d79.zip"
+    sha256: "4a3d97d75f7417208403bd0f5e8c3b010ae0dd9a36968f78ecc5cd0161b2ddb9"
+  "2022.08":
+    url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/8637c7f4b6238ced28e741bb6e4d4ddc8b60b477.zip"
+    sha256: "b83884652dc773e6c58e8efebfb950de714f6e34161a0fb388d2f546efea3a87"
+  "2023.07":
+    url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/f8b3c067fb0850afc0490ada49c501bef6b702b9.zip"
+    sha256: "b8f4837372e4c3defd4ccb0416613ee33f6032974dba36363dc35cc74f9b3642"
+  "2025.10":
+    url: "https://github.com/OGRECave/ogre-pagedgeometry/archive/5297d3d3f7deed4cf98217078c0fdf80eb28d19c.zip"
+    sha256: "8fb92af52c030481a034a46fede5cc997228bcc1c878edaf826ea6288b4bafbf"
