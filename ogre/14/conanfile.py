@@ -40,9 +40,9 @@ class OGREConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        # self.requires("zlib/[~1]")
+        self.requires("zlib/[~1]")
         self.requires("freetype/[~2]")
-        self.requires("freeimage/[~3]")
+        self.requires("freeimage/3.18.0@anotherfoxguy/stable")
         self.requires("cg-toolkit/3.1@anotherfoxguy/stable")
         self.requires("pugixml/[~1]")
         self.requires("sdl/[~2]")
@@ -50,10 +50,6 @@ class OGREConan(ConanFile):
             self.requires("directx-sdk/9.0@anotherfoxguy/stable")
         if self.options.with_vulkan:
             self.requires("vulkan-sdk-bin/[~1.3]@anotherfoxguy/stable")
-
-        self.requires("libpng/1.6.40", override=True)
-        self.requires("libwebp/1.3.2", override=True)
-        self.requires("zlib/1.3", force=True)
 
     def system_requirements(self):
         Apt(self).install(

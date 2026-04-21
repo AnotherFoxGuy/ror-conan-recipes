@@ -21,7 +21,7 @@ class OGREConan(ConanFile):
         # self.requires("zlib/[~1]")
         self.requires("zziplib/[~0]")
         self.requires("freetype/[~2]")
-        self.requires("freeimage/[~3]")
+        self.requires("freeimage/3.18.0@anotherfoxguy/stable")
         self.requires("cg-toolkit/3.1@anotherfoxguy/stable")
         self.requires("pugixml/[~1]")
         if self.settings.os == "Windows":
