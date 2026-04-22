@@ -24,6 +24,7 @@ class OGREConan(ConanFile):
         "nodeless_positioning": [True, False],
         "codec_rsimage": [True, False],
         "with_vulkan": [True, False],
+        "profiling": [True, False],
     }
 
     default_options = {
@@ -31,6 +32,7 @@ class OGREConan(ConanFile):
         "nodeless_positioning": True,
         "codec_rsimage": False,
         "with_vulkan": False,
+        "profiling": False,
     }
 
     def export_sources(self):
@@ -46,6 +48,7 @@ class OGREConan(ConanFile):
         self.requires("cg-toolkit/3.1@anotherfoxguy/stable")
         self.requires("pugixml/[~1]")
         self.requires("sdl/[~2]")
+        self.requires("imgui/[~1]@anotherfoxguy/stable")
         if self.settings.os == "Windows":
             self.requires("directx-sdk/9.0@anotherfoxguy/stable")
         if self.options.with_vulkan:
@@ -90,6 +93,7 @@ class OGREConan(ConanFile):
         tc.variables["OGRE_BUILD_PLUGIN_RSIMAGE"] = self.options.codec_rsimage
         tc.variables["OGRE_NODELESS_POSITIONING"] = self.options.nodeless_positioning
         tc.variables["OGRE_BUILD_RENDERSYSTEM_VULKAN"] = self.options.with_vulkan
+        tc.variables["OGRE_PROFILING"] = self.options.profiling
 
         if self.options.resourcemanager_strict == "off":
             tc.variables["OGRE_RESOURCEMANAGER_STRICT"] = 0

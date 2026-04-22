@@ -1,0 +1,59 @@
+diff --git a/Components/Overlay/CMakeLists.txt b/Components/Overlay/CMakeLists.txt
+index e12e53a3f9..2dd56f379b 100644
+--- a/Components/Overlay/CMakeLists.txt
++++ b/Components/Overlay/CMakeLists.txt
+@@ -10,16 +10,18 @@
+ ############################################################
+ # Overlay optional component
+ ############################################################
+ 
++find_package(imgui REQUIRED)
++
+ # define header and source files for the library
+ file(GLOB HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
+ list(APPEND HEADER_FILES 
+   ${PROJECT_BINARY_DIR}/include/OgreOverlayPrerequisites.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/include/OgreOverlay.i)
+ file(GLOB SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+ 
+-if(OGRE_BUILD_COMPONENT_OVERLAY_IMGUI)
++if(0)
+   set(IMGUI_DIR "${PROJECT_BINARY_DIR}/imgui-1.91.9b" CACHE PATH "")
+   if(NOT EXISTS ${IMGUI_DIR})
+     message(STATUS "Downloading imgui")
+     file(DOWNLOAD
+@@ -38,9 +40,9 @@ if(OGRE_BUILD_COMPONENT_OVERLAY_IMGUI)
+     set(IMGUI_ENABLE_FREETYPE TRUE)
+     list(APPEND SOURCE_FILES ${IMGUI_DIR}/misc/freetype/imgui_freetype.cpp)
+   endif()
+ else()
+-    list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/OgreImGuiOverlay.cpp")
++    #list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/OgreImGuiOverlay.cpp")
+ endif()
+ 
+ # setup target
+ add_library(OgreOverlay ${OGRE_COMP_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
+@@ -61,9 +63,9 @@ elseif(UNIX)
+   set_source_files_properties(src/OgreFont.cpp PROPERTIES
+     COMPILE_FLAGS "-Wno-cast-qual -Wno-unused-function")
+ endif()
+ 
+-if(OGRE_BUILD_COMPONENT_OVERLAY_IMGUI)
++if(0)
+   target_include_directories(OgreOverlay PUBLIC
+     PUBLIC "$<BUILD_INTERFACE:${IMGUI_DIR}>"
+     PRIVATE "$<BUILD_INTERFACE:${IMGUI_DIR}/misc/freetype>")
+ 
+@@ -95,8 +97,12 @@ if(OGRE_BUILD_COMPONENT_OVERLAY_IMGUI)
+     ${IMGUI_DIR}/imgui.h
+     ${IMGUI_DIR}/imconfig.h)
+ endif()
+ 
++configure_file(${OGRE_TEMPLATES_DIR}/imconfig.h ${CMAKE_CURRENT_SOURCE_DIR}/include/imconfig.h)
++list(APPEND HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/imconfig.h)
++target_link_libraries(OgreOverlay PUBLIC imgui::imgui)
++
+ generate_export_header(OgreOverlay 
+     EXPORT_MACRO_NAME _OgreOverlayExport
+     EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/include/OgreOverlayPrerequisites.h)
+ 
