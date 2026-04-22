@@ -6,6 +6,8 @@ import re
 from conan.api.conan_api import ConanAPI
 
 
+exit()
+
 def system(command):
     retcode = os.system(command)
     if retcode != 0:
