@@ -25,6 +25,7 @@ class OGREConan(ConanFile):
         "codec_rsimage": [True, False],
         "with_vulkan": [True, False],
         "profiling": [True, False],
+        "profiling_remotery": [True, False],
     }
 
     default_options = {
@@ -33,6 +34,7 @@ class OGREConan(ConanFile):
         "codec_rsimage": False,
         "with_vulkan": False,
         "profiling": False,
+        "profiling_remotery": False,
     }
 
     def export_sources(self):
@@ -94,6 +96,7 @@ class OGREConan(ConanFile):
         tc.variables["OGRE_NODELESS_POSITIONING"] = self.options.nodeless_positioning
         tc.variables["OGRE_BUILD_RENDERSYSTEM_VULKAN"] = self.options.with_vulkan
         tc.variables["OGRE_PROFILING"] = self.options.profiling
+        tc.variables["OGRE_PROFILING_REMOTERY"] = self.options.profiling_remotery
 
         if self.options.resourcemanager_strict == "off":
             tc.variables["OGRE_RESOURCEMANAGER_STRICT"] = 0

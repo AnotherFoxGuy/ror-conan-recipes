@@ -1,0 +1,32 @@
+diff --git a/OgreMain/CMakeLists.txt b/OgreMain/CMakeLists.txt
+index 483f9f3dd6..119065bbfe 100644
+--- a/OgreMain/CMakeLists.txt
++++ b/OgreMain/CMakeLists.txt
+@@ -144,12 +144,24 @@ if(OGRE_CONFIG_FILESYSTEM_UNICODE)
+   set_source_files_properties(src/OgreZip.cpp
+     PROPERTIES COMPILE_DEFINITIONS _OGRE_FILESYSTEM_ARCHIVE_UNICODE)
+ endif()
+ 
+-if(OGRE_PROFILING_REMOTERY_PATH)
+-  list(APPEND SOURCE_FILES ${OGRE_PROFILING_REMOTERY_PATH}/Remotery.c)
+-  set_source_files_properties(${OGRE_PROFILING_REMOTERY_PATH}/Remotery.c PROPERTIES LANGUAGE CXX)
++if(OGRE_PROFILING_REMOTERY)
++  include(FetchContent)
++  set(FETCHCONTENT_QUIET FALSE)
++  FetchContent_Declare(
++          remotery
++          URL https://github.com/Celtoys/Remotery/releases/download/v1.2.1/Remotery-1.2.1.zip
++          DOWNLOAD_EXTRACT_TIMESTAMP TRUE
++          URL_MD5 61edfa0894eff02129930ffe1ee0c625
++  )
++  FetchContent_MakeAvailable(remotery)
++
++  include_directories("${remotery_SOURCE_DIR}/lib/")
++  list(APPEND SOURCE_FILES "${remotery_SOURCE_DIR}/lib/Remotery.c")
++  set_source_files_properties("${remotery_SOURCE_DIR}/lib/Remotery.c" PROPERTIES LANGUAGE CXX)
+   set_source_files_properties(src/OgreProfiler.cpp PROPERTIES COMPILE_DEFINITIONS USE_REMOTERY)
++  message("Building with Remotery")
+ endif()
+ 
+ set (TARGET_LINK_FLAGS "")
+ 

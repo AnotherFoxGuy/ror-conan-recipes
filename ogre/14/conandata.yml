@@ -36,6 +36,7 @@ patches:
   - patch_file: patches/14.0.0/pugixml-fix.patch
   - patch_file: patches/14.0.0/FindPkgMacros.cmake.patch
   - patch_file: patches/14.0.0/use-external-imgui.patch
+  - patch_file: patches/14.0.0/dl-remotery.patch
 sources:
   14.0.0:
     sha256: 8aa99716252d6a161f280bf2c460a7aa290e7c138b80be51abb85132ef14f5eb
