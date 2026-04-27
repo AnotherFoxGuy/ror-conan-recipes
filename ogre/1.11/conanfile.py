@@ -10,6 +10,20 @@ class OGREConan(ConanFile):
     url = "https://github.com/AnotherFoxGuy/conan-OGRE"
     description = "scene-oriented, flexible 3D engine written in C++"
     settings = "os", "compiler", "build_type", "arch"
+    
+    options = {
+        "resourcemanager_strict": ["off", "pedantic", "strict"],
+        "nodeless_positioning": [True, False],
+        "profiling": [True, False],
+        "profiling_remotery": [True, False],
+    }
+
+    default_options = {
+        "resourcemanager_strict": "off",
+        "nodeless_positioning": True,
+        "profiling": False,
+        "profiling_remotery": False,
+    }
 
     def export_sources(self):
         export_conandata_patches(self)
@@ -61,6 +75,16 @@ class OGREConan(ConanFile):
         tc.variables["OGRE_BUILD_SAMPLES"] = "OFF"
         tc.variables["OGRE_INSTALL_SAMPLES"] = "OFF"
         tc.variables["OGRE_RESOURCEMANAGER_STRICT"] = 0
+        tc.variables["OGRE_NODELESS_POSITIONING"] = self.options.nodeless_positioning
+        tc.variables["OGRE_PROFILING"] = self.options.profiling
+        tc.variables["OGRE_PROFILING_REMOTERY"] = self.options.profiling_remotery
+
+        if self.options.resourcemanager_strict == "off":
+            tc.variables["OGRE_RESOURCEMANAGER_STRICT"] = 0
+        elif self.options.resourcemanager_strict == "pedantic":
+            tc.variables["OGRE_RESOURCEMANAGER_STRICT"] = 1
+        else:
+            tc.variables["OGRE_RESOURCEMANAGER_STRICT"] = 2
 
         if self.settings.os == "Windows":
             tc.variables["CMAKE_CXX_FLAGS"] = "-D_OGRE_FILESYSTEM_ARCHIVE_UNICODE"
