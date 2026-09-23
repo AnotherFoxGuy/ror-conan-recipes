@@ -37,6 +37,11 @@ patches:
   - patch_file: patches/14.0.0/FindPkgMacros.cmake.patch
   - patch_file: patches/14.0.0/use-external-imgui.patch
   - patch_file: patches/14.0.0/dl-remotery.patch
+  14.6.0:
+  - patch_file: patches/14.0.0/pugixml-fix.patch
+  - patch_file: patches/14.0.0/FindPkgMacros.cmake.patch
+  - patch_file: patches/14.0.0/use-external-imgui.patch
+  - patch_file: patches/14.0.0/dl-remotery.patch
 sources:
   14.0.0:
     sha256: 8aa99716252d6a161f280bf2c460a7aa290e7c138b80be51abb85132ef14f5eb
@@ -74,3 +79,6 @@ sources:
   14.5.2:
     sha256: 1949fe62f3e4b8043e82e4dc94f9b0ab412a5bffc9e10d3b1dddc80fe54fe1e3
     url: https://github.com/OGRECave/ogre/archive/refs/tags/v14.5.2.tar.gz
+  14.6.0:
+    sha256: 5ac6b697622f7e35976b18d34d2de08a9cbc68517526f6b84d381e400169951b
+    url: https://github.com/OGRECave/ogre/archive/refs/tags/v14.6.0.tar.gz
