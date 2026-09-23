@@ -1,13 +1,19 @@
 sources:
-  "3.4.0":
-    url: "https://github.com/MyGUI/mygui/archive/refs/tags/MyGUI3.4.0.tar.gz"
-    sha256: "d1d5f294670ae71f7200ed4b30859018281d8cfd45d6a38d18b97a4aba604c42"
-  "3.4.1":
-    url: "https://github.com/MyGUI/mygui/archive/refs/tags/MyGUI3.4.1.tar.gz"
-    sha256: "bdf730bdeb4ad89e6b8223967db01aa5274d2b93adc2c0d6aa4842faeed4de1a"
-  "3.4.2":
-    url: "https://github.com/MyGUI/mygui/archive/refs/tags/MyGUI3.4.2.tar.gz"
-    sha256: "1cc45fb96c9438e3476778449af0378443d84794a458978a29c75306e45dd45a"
-  "3.4.3":
-    url: "https://github.com/MyGUI/mygui/archive/refs/tags/MyGUI3.4.3.tar.gz"
-    sha256: "33c91b531993047e77cace36d6fea73634b8c17bd0ed193d4cd12ac7c6328abd"
+  3.4.0:
+    sha256: d1d5f294670ae71f7200ed4b30859018281d8cfd45d6a38d18b97a4aba604c42
+    url: https://github.com/MyGUI/mygui/archive/refs/tags/MyGUI3.4.0.tar.gz
+  3.4.1:
+    sha256: bdf730bdeb4ad89e6b8223967db01aa5274d2b93adc2c0d6aa4842faeed4de1a
+    url: https://github.com/MyGUI/mygui/archive/refs/tags/MyGUI3.4.1.tar.gz
+  3.4.2:
+    sha256: 1cc45fb96c9438e3476778449af0378443d84794a458978a29c75306e45dd45a
+    url: https://github.com/MyGUI/mygui/archive/refs/tags/MyGUI3.4.2.tar.gz
+  3.4.3:
+    sha256: 33c91b531993047e77cace36d6fea73634b8c17bd0ed193d4cd12ac7c6328abd
+    url: https://github.com/MyGUI/mygui/archive/refs/tags/MyGUI3.4.3.tar.gz
+  3.5.0:
+    sha256: 6672ed023cdc947908a60de8d37050482d30eb5a3c1a14285452e951007f9e0f
+    url: https://github.com/MyGUI/mygui/archive/refs/tags/v3.5.0.tar.gz
+  3.5.1:
+    sha256: 31beb5c361cc3d42462dbe7531928451731afc1df4f7b205515b34254f4dd03c
+    url: https://github.com/MyGUI/mygui/archive/refs/tags/v3.5.1.tar.gz
