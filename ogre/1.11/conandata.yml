@@ -2,8 +2,16 @@ sources:
   "1.11.6.1":
     url: "https://github.com/AnotherFoxGuy/ogre/archive/refs/tags/1.11.6.1.tar.gz"
     sha256: "31c84051ffe9a3710c553cfa27ebda7b176c9dfe3b4d2a113d4f02caf48ecd5b"
+  "1.11.6.2":
+    url: "https://github.com/RigsOfRods/ogre/archive/refs/tags/v1.11.6.2.tar.gz"
+    sha256: "88315A8304F0953C21EFF2CC2D70545FDF34853C42765AEAAA4D2D9BBC4C41CF"
 patches:
   "1.11.6.1":
+    - patch_file: "patches/1.11.6.1/FixFreeImage.patch"
+    - patch_file: "patches/1.11.6.1/FixSamples.patch"
+    - patch_file: "patches/1.11.6.1/FixOverlay.patch"
+    - patch_file: "patches/1.11.6.1/scriptlexer.patch"
+  "1.11.6.2":
     - patch_file: "patches/1.11.6.1/FixFreeImage.patch"
     - patch_file: "patches/1.11.6.1/FixSamples.patch"
     - patch_file: "patches/1.11.6.1/FixOverlay.patch"
