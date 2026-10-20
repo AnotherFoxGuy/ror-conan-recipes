@@ -37,7 +37,7 @@ class OGREConan(ConanFile):
         self.requires("zziplib/[~0]")
         self.requires("freetype/[~2]")
         self.requires("sdl/[~2]")
-        self.requires("freeimage/3.18.0@anotherfoxguy/stable")
+        self.requires("freeimage/3.18.0@anotherfoxguy/stable") 
         self.requires("cg-toolkit/3.1@anotherfoxguy/stable")
         self.requires("pugixml/[~1]")
         if self.settings.os == "Windows":
@@ -108,12 +108,17 @@ class OGREConan(ConanFile):
             "include(OgreFeatureSummary)",
         )
         replace_in_file(self,
-            os.path.join(self.source_folder, "CMake/Dependencies.cmake"),
+            os.path.join(self.source_folder, "Components", "Bites", "CMakeLists.txt"),
+            "target_link_libraries(OgreBites PRIVATE ${SDL2_LIBRARY})",
+            "target_link_libraries(OgreBites PRIVATE SDL2::SDL2)",
+        )
+        replace_in_file(self,
+            os.path.join(self.source_folder, "CMake", "Dependencies.cmake"),
             "find_package(DirectX)",
             "find_package(DirectX9)",
         )
         replace_in_file(self,
-            os.path.join(self.source_folder, "CMake/Packages/FindDirectX11.cmake"),
+            os.path.join(self.source_folder, "CMake", "Packages", "FindDirectX11.cmake"),
             'find_path(DirectX11_INCLUDE_DIR NAMES d3d11.h HINTS "',
             'find_path(DirectX11_INCLUDE_DIR NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NAMES d3d11.h HINTS "',
         )
