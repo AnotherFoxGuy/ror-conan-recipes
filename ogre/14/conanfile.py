@@ -35,6 +35,7 @@ class OGREConan(ConanFile):
         "with_vulkan": False,
         "profiling": False,
         "profiling_remotery": False,
+        "sdl*:pulse": False
     }
 
     def export_sources(self):

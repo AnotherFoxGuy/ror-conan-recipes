@@ -1,0 +1,11 @@
+--- CMake/Utils/FindPkgMacros.cmake
++++ CMake/Utils/FindPkgMacros.cmake
+@@ -82,7 +82,7 @@
+   if (${PREFIX}_FWK)
+     set(${PREFIX} ${${PREFIX}_FWK})
+   elseif (${PREFIX}_REL AND ${PREFIX}_DBG)
+-    set(${PREFIX} optimized ${${PREFIX}_REL} debug ${${PREFIX}_DBG})
++    set(${PREFIX} "$<$<CONFIG:Debug>:${${PREFIX}_DBG}>$<$<NOT:$<CONFIG:Debug>>:${${PREFIX}_REL}>")
+   elseif (${PREFIX}_REL)
+     set(${PREFIX} ${${PREFIX}_REL})
+   elseif (${PREFIX}_DBG)

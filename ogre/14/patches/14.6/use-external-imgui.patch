@@ -1,0 +1,49 @@
+--- Components/Overlay/CMakeLists.txt.org	2026-10-19 19:21:26.577810183 +0200
++++ Components/Overlay/CMakeLists.txt	2026-10-19 19:22:24.945320230 +0200
+@@ -11,6 +11,8 @@
+ # Overlay optional component
+ ############################################################
+ 
++find_package(imgui REQUIRED)
++
+ # define header and source files for the library
+ file(GLOB HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
+ list(APPEND HEADER_FILES 
+@@ -18,7 +20,7 @@
+   ${CMAKE_CURRENT_SOURCE_DIR}/include/OgreOverlay.i)
+ file(GLOB SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+ 
+-if(OGRE_BUILD_COMPONENT_OVERLAY_IMGUI)
++if(0)
+   set(IMGUI_DIR "${PROJECT_BINARY_DIR}/imgui-1.92.9b" CACHE PATH "")
+   if(NOT EXISTS ${IMGUI_DIR})
+     message(STATUS "Downloading imgui")
+@@ -39,7 +41,7 @@
+     list(APPEND SOURCE_FILES ${IMGUI_DIR}/misc/freetype/imgui_freetype.cpp)
+   endif()
+ else()
+-    list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/OgreImGuiOverlay.cpp")
++    #list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/OgreImGuiOverlay.cpp")
+ endif()
+ 
+ # setup target
+@@ -62,7 +64,7 @@
+     COMPILE_FLAGS "-Wno-cast-qual -Wno-unused-function")
+ endif()
+ 
+-if(OGRE_BUILD_COMPONENT_OVERLAY_IMGUI)
++if(0)
+   target_include_directories(OgreOverlay PUBLIC
+     PUBLIC "$<BUILD_INTERFACE:${IMGUI_DIR}>"
+     PRIVATE "$<BUILD_INTERFACE:${IMGUI_DIR}/misc/freetype>")
+@@ -96,6 +98,10 @@
+     ${IMGUI_DIR}/imconfig.h)
+ endif()
+ 
++configure_file(${OGRE_TEMPLATES_DIR}/imconfig.h ${CMAKE_CURRENT_SOURCE_DIR}/include/imconfig.h)
++list(APPEND HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/imconfig.h)
++target_link_libraries(OgreOverlay PUBLIC imgui::imgui)
++
+ generate_export_header(OgreOverlay 
+     EXPORT_MACRO_NAME _OgreOverlayExport
+     EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/include/OgreOverlayPrerequisites.h)

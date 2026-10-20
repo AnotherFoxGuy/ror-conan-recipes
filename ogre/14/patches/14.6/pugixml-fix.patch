@@ -1,0 +1,15 @@
+--- Tools/XMLConverter/CMakeLists.txt
++++ Tools/XMLConverter/CMakeLists.txt
+@@ -21,9 +21,10 @@
+   src/OgreXMLSkeletonSerializer.cpp
+ )
+ 
++message("Fixing OgreXMLConverter")
+ add_executable(OgreXMLConverter ${HEADER_FILES} ${SOURCE_FILES})
+-target_include_directories(OgreXMLConverter PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+-target_link_libraries(OgreXMLConverter OgreMain pugixml)
++target_include_directories(OgreXMLConverter PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${pugixml_INCLUDE_DIRS})
++target_link_libraries(OgreXMLConverter OgreMain pugixml::pugixml)
+ 
+ if (OGRE_PROJECT_FOLDERS)
+ 	set_property(TARGET OgreXMLConverter PROPERTY FOLDER Tools)
