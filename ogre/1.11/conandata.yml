@@ -12,7 +12,7 @@ patches:
     - patch_file: "patches/1.11.6.1/FixOverlay.patch"
     - patch_file: "patches/1.11.6.1/scriptlexer.patch"
   "1.11.6.2":
-    - patch_file: "patches/1.11.6.1/FixFreeImage.patch"
-    - patch_file: "patches/1.11.6.1/FixSamples.patch"
-    - patch_file: "patches/1.11.6.1/FixOverlay.patch"
-    - patch_file: "patches/1.11.6.1/scriptlexer.patch"
+    - patch_file: "patches/1.11.6.2/FixFreeImage.patch"
+    - patch_file: "patches/1.11.6.2/FixSamples.patch"
+    - patch_file: "patches/1.11.6.2/FixOverlay.patch"
+    - patch_file: "patches/1.11.6.2/scriptlexer.patch"

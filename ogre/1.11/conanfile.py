@@ -1,5 +1,5 @@
 from conan import ConanFile
-from conan.tools.files import get, collect_libs, rmdir, replace_in_file, apply_conandata_patches, export_conandata_patches
+from conan.tools.files import get, collect_libs, rmdir, replace_in_file, apply_conandata_patches, export_conandata_patches, rename
 from conan.tools.cmake import CMakeToolchain, CMake, CMakeDeps, cmake_layout
 from conan.tools.system.package_manager import Apt
 import os
@@ -23,6 +23,7 @@ class OGREConan(ConanFile):
         "nodeless_positioning": True,
         "profiling": False,
         "profiling_remotery": False,
+        "sdl*:pulse": False
     }
 
     def export_sources(self):
@@ -32,18 +33,19 @@ class OGREConan(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        # self.requires("zlib/[~1]")
+        self.requires("zlib/[~1]")
         self.requires("zziplib/[~0]")
         self.requires("freetype/[~2]")
+        self.requires("sdl/[~2]")
         self.requires("freeimage/3.18.0@anotherfoxguy/stable")
         self.requires("cg-toolkit/3.1@anotherfoxguy/stable")
         self.requires("pugixml/[~1]")
         if self.settings.os == "Windows":
             self.requires("directx-sdk/9.0@anotherfoxguy/stable")
 
-        self.requires("libpng/1.6.40", override=True)
-        self.requires("libwebp/1.3.2", override=True)
-        self.requires("zlib/1.3", force=True)
+        #self.requires("libpng/1.6.40", override=True)
+        #self.requires("libwebp/1.3.2", override=True)
+        #self.requires("zlib/1.3", force=True)
 
     def system_requirements(self):
         Apt(self).install([
@@ -96,6 +98,15 @@ class OGREConan(ConanFile):
 
     def _patch_sources(self):
         apply_conandata_patches(self)
+        rename(self, 
+            os.path.join(self.source_folder, "CMake", "FeatureSummary.cmake"),
+            os.path.join(self.source_folder, "CMake", "OgreFeatureSummary.cmake")
+        )
+        replace_in_file(self,
+            os.path.join(self.source_folder, "CMakeLists.txt"),
+            "include(FeatureSummary)",
+            "include(OgreFeatureSummary)",
+        )
         replace_in_file(self,
             os.path.join(self.source_folder, "CMake/Dependencies.cmake"),
             "find_package(DirectX)",
