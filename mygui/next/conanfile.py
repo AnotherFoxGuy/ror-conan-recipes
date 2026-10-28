@@ -26,6 +26,7 @@ class MyGUIConan(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
+        tc.cache_variables["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
         tc.variables["MYGUI_BUILD_DEMOS"] = "OFF"
         tc.variables["MYGUI_BUILD_DOCS"] = "OFF"
         tc.variables["MYGUI_BUILD_TEST_APP"] = "OFF"
