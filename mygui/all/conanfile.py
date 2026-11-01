@@ -1,6 +1,7 @@
 from conan import ConanFile
 from conan.tools.files import get, collect_libs, replace_in_file
 from conan.tools.cmake import CMakeToolchain, CMake, CMakeDeps, cmake_layout
+from conan.tools.scm import Version
 import os
 
 
@@ -10,59 +11,85 @@ class MyGUIConan(ConanFile):
     url = "https://github.com/AnotherFoxGuy/conan-MyGUI"
     description = "Fast, flexible and simple GUI."
     settings = "os", "compiler", "build_type", "arch"
-    options = {"system_ogre": [True, False]}
-    default_options = {"system_ogre": False}
+    options = {
+        "system_ogre": [True, False],
+        "rendersystem": ["ogre", "ogre_next"]
+    }
+    default_options = {
+        "system_ogre": False,
+        "rendersystem": "ogre"
+    }
 
     def layout(self):
         cmake_layout(self)
 
     def requirements(self):
+        self.requires("pugixml/[~1.16]")
+        self.requires("utfcpp/[~4.1]")
+        
         if not self.options.system_ogre:
-            self.requires("ogre3d/[>=1 <15]@anotherfoxguy/stable")
-            self.requires("zlib/1.3", override=True)
-
-    def build_requirements(self):
-        self.tool_requires("cmake/[>=3.22 <4]")
+            if self.options.rendersystem == "ogre_next":
+                self.requires("ogre3d-next/[~3]@anotherfoxguy/stable")
+            else:
+                self.requires("ogre3d/[>=1 <15]@anotherfoxguy/stable")
 
     def source(self):
         get(self, **self.conan_data["sources"][self.version], strip_root=True)
 
     def generate(self):
         tc = CMakeToolchain(self)
+        if Version(self.version) < "3.5.0":
+            tc.cache_variables["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
         tc.variables["MYGUI_BUILD_DEMOS"] = "OFF"
+        tc.variables["MYGUI_BUILD_ADVANCED_DEMOS"] = "OFF"
         tc.variables["MYGUI_BUILD_DOCS"] = "OFF"
         tc.variables["MYGUI_BUILD_TEST_APP"] = "OFF"
         tc.variables["MYGUI_BUILD_PLUGINS"] = "OFF"
         tc.variables["MYGUI_BUILD_TOOLS"] = "OFF"
-        tc.variables["MYGUI_RENDERSYSTEM"] = "3"
+        tc.variables["MYGUI_BUILD_UNITTESTS"] = "OFF"
+        tc.variables["MYGUI_USE_SYSTEM_PUGIXML"] = "ON"
+        tc.variables["MYGUI_USE_SYSTEM_UTF8CPP"] = "ON"
+        tc.variables["MYGUI_USE_SYSTEM_MSDFGEN"] = "ON"
+        if self.options.rendersystem == "ogre_next":
+            tc.variables["MYGUI_RENDERSYSTEM"] = "9"
+        else:
+            tc.variables["MYGUI_RENDERSYSTEM"] = "3"
         tc.generate()
         deps = CMakeDeps(self)
         deps.generate()
 
     def _patch_sources(self):
-        replace_in_file(self,
-            os.path.join(self.source_folder, "MyGUIEngine/CMakeLists.txt"),
-            "${FREETYPE_LIBRARIES}",
-            "freetype",
-        )
-        replace_in_file(self,
-            os.path.join(self.source_folder, "CMake/Dependencies.cmake"),
-            "find_package(OGRE_Old)",
-            "find_package(OGRE CONFIG)",
-        )
-        replace_in_file(self,
-            os.path.join(self.source_folder, "Platforms/Ogre/OgrePlatform/CMakeLists.txt"),
-            "${OGRE_LIBRARIES}",
-            "OGRE::OGRE",
-        )
-        replace_in_file(self,
-            os.path.join(self.source_folder, "CMake/Utils/PrecompiledHeader.cmake"),
-            "if (MSVC)",
-            """
-            target_precompile_headers(${TARGET} PRIVATE ${SRC_FILE})
-            if (0)
-            """,
-        )
+        if Version(self.version) < "3.5.0":
+            replace_in_file(self,
+                os.path.join(self.source_folder, "MyGUIEngine/CMakeLists.txt"),
+                "${FREETYPE_LIBRARIES}",
+                "freetype",
+            )
+            replace_in_file(self,
+                os.path.join(self.source_folder, "CMake/Dependencies.cmake"),
+                "find_package(OGRE_Old)",
+                "find_package(OGRE CONFIG)",
+            )
+            replace_in_file(self,
+                os.path.join(self.source_folder, "Platforms/Ogre/OgrePlatform/CMakeLists.txt"),
+                "${OGRE_LIBRARIES}",
+                "OGRE::OGRE",
+            )
+        else:
+            replace_in_file(self,
+                os.path.join(self.source_folder, "Platforms/OgrePlatform/CMakeLists.txt"),
+                "${OGRE_LIBRARIES}",
+                "OGRE::OGRE",
+            )
+        if Version(self.version) < "3.4.1":
+            replace_in_file(self,
+                os.path.join(self.source_folder, "CMake/Utils/PrecompiledHeader.cmake"),
+                "if (MSVC)",
+                """
+                target_precompile_headers(${TARGET} PRIVATE ${SRC_FILE})
+                if (0)
+                """,
+            )
 
     def build(self):
         self._patch_sources()
@@ -86,4 +113,8 @@ class MyGUIConan(ConanFile):
 
     def package_id(self):
         if not self.info.options.system_ogre:
-            self.info.requires["ogre3d"].full_recipe_mode()
+            if self.info.options.rendersystem == "ogre_next":
+                self.info.requires["ogre3d-next"].full_recipe_mode()
+            else:
+                self.info.requires["ogre3d"].full_recipe_mode()
+            
